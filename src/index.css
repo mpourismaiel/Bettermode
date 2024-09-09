@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-surface-1: 222 47% 11%;
+  --color-surface-2: 229 84% 5%;
+  --color-surface-3: 217 33% 17%;
+  --color-foreground-1: 0 0% 100%;
+  --color-foreground-2: 218 11% 65%;
+  --color-foreground-3: 215 14% 34%;
+}
+
+.dark {
+  --color-surface-1: 222 47% 11%;
+  --color-surface-2: 229 84% 5%;
+  --color-surface-3: 217 33% 17%;
+  --color-foreground-1: 0 0% 100%;
+  --color-foreground-2: 218 11% 65%;
+  --color-foreground-3: 215 14% 34%;
+}
+
+.custom-container-wrapper {
+  @apply flex justify-center;
+}
+
+.custom-container {
+  @apply w-full max-w-full px-8 lg:max-w-[900px] lg:px-0 xl:max-w-[1200px];
+}

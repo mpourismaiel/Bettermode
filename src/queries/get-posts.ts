@@ -1,0 +1,202 @@
+import { gql } from "@apollo/client";
+
+export const GET_POSTS = gql`
+  query GetPosts(
+    $after: String
+    $before: String
+    $excludePins: Boolean
+    $filterBy: [PostListFilterByInput!]
+    $limit: Int!
+    $offset: Int
+    $orderBy: PostListOrderByEnum
+    $orderByString: String
+    $postTypeIds: [String!]
+    $reverse: Boolean
+    $spaceIds: [ID!]
+    $query: String
+  ) {
+    posts(
+      after: $after
+      before: $before
+      excludePins: $excludePins
+      filterBy: $filterBy
+      limit: $limit
+      offset: $offset
+      orderBy: $orderBy
+      orderByString: $orderByString
+      postTypeIds: $postTypeIds
+      reverse: $reverse
+      spaceIds: $spaceIds
+      query: $query
+    ) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        id
+        slug
+        subscribersCount
+        postTypeId
+        reactionsCount
+        shortContent
+        publishedAt
+        totalRepliesCount
+        locked
+        title
+        description
+        thumbnail {
+          ... on Image {
+            urls {
+              full
+              large
+              medium
+              small
+              thumb
+            }
+          }
+          ... on Emoji {
+            id
+            text
+          }
+          ... on Glyph {
+            id
+            text
+            variant
+          }
+          ... on File {
+            id
+            name
+            url
+          }
+        }
+        primaryReactionType
+        lastActivityAt
+        language
+        customSeoDetail {
+          description
+          noIndex
+          thumbnail {
+            ... on Image {
+              urls {
+                full
+                large
+                medium
+                small
+                thumb
+              }
+            }
+            ... on Emoji {
+              id
+              text
+            }
+            ... on Glyph {
+              id
+              text
+              variant
+            }
+            ... on File {
+              id
+              name
+              url
+            }
+          }
+          title
+          canonicalUrl
+        }
+        owner {
+          member {
+            displayName
+            name
+            id
+            username
+            tagline
+            profilePicture {
+              ... on Image {
+                urls {
+                  full
+                  large
+                  medium
+                  small
+                  thumb
+                }
+              }
+              ... on Emoji {
+                id
+                text
+              }
+              ... on Glyph {
+                id
+                text
+                variant
+              }
+              ... on File {
+                id
+                name
+                url
+              }
+            }
+            badges {
+              backgroundColor
+              badgeId
+              imageId
+              longDescription
+              text
+              shortDescription
+              textColor
+              type
+              badge {
+                active
+                backgroundColor
+                daysUntilExpired
+                id
+                imageId
+                longDescription
+                name
+                shortDescription
+                textColor
+                text
+                type
+                settings {
+                  key
+                  value
+                }
+                image {
+                  ... on Image {
+                    urls {
+                      full
+                      large
+                      medium
+                      small
+                      thumb
+                    }
+                  }
+                  ... on Emoji {
+                    id
+                    text
+                  }
+                  ... on Glyph {
+                    id
+                    text
+                    variant
+                  }
+                  ... on File {
+                    id
+                    name
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+        reactions {
+          count
+          reacted
+          reaction
+        }
+      }
+    }
+  }
+`;
