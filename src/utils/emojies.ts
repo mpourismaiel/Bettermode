@@ -6,3 +6,12 @@ export const emojiMap = {
   "open_mouth": "😮",
   "cry": "😢",
 };
+
+export const emojiVerbsMap = {
+  "+1": "Liked",
+  "heart": "Loved",
+  "tada": "Celebrated",
+  "smile": "Laughed",
+  "open_mouth": "Surprised",
+  "cry": "Cried",
+};

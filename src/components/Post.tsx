@@ -1,9 +1,76 @@
 import { useMemo } from "react";
+import { BellIcon, BellRingIcon, ShareIcon, ThumbsUpIcon } from "lucide-react";
 import dayjs from "dayjs";
 
 import { Emoji } from "./Emoji";
 import { Prose } from "./Prose";
 import { Button } from "./Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./Dropdown";
+import { emojiMap, emojiVerbsMap } from "../utils/emojies";
+
+export const FollowButton = ({ post }: { post: any }) => {
+  return (
+    <Button variant="primary" size="default">
+      {post.authMemberProps.subscribed ? (
+        <>
+          <BellRingIcon className="me-2 h-4 w-4" />
+          Followed
+        </>
+      ) : (
+        <>
+          <BellIcon className="me-2 h-4 w-4" />
+          Follow
+        </>
+      )}
+    </Button>
+  );
+};
+
+const LikeButton = ({ post }: { post: any }) => {
+  const authReaction = useMemo(
+    () => post.reactions.some(({ reacted }) => reacted),
+    [post],
+  );
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="primary"
+          toggle={authReaction ? "active" : "default"}
+          size="default"
+        >
+          {authReaction ? (
+            <>
+              <span className="me-2">{authReaction.reaction}</span>
+              {emojiVerbsMap[authReaction.reaction as keyof typeof emojiMap]}
+            </>
+          ) : (
+            <>
+              <ThumbsUpIcon className="me-2 h-4 w-4" />
+              Like
+            </>
+          )}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="flex h-[80px] items-center">
+        {Object.keys(emojiMap).map(key => (
+          <DropdownMenuItem
+            key={key}
+            className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl text-xl transition-all duration-200 ease-out hover:text-3xl"
+          >
+            {emojiMap[key as keyof typeof emojiMap]}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 export const Post = ({
   summaryMode = false,
@@ -25,7 +92,7 @@ export const Post = ({
   return (
     <article
       key={post.id}
-      className="flex flex-col rounded-lg bg-surface-1 px-6 py-4 shadow-xl"
+      className="flex flex-col rounded-lg bg-surface-1 p-6 shadow-xl"
     >
       <div className="mb-4 flex items-center">
         <img
@@ -60,6 +127,14 @@ export const Post = ({
             <Emoji emoji={reaction.reaction} />
           </Button>
         ))}
+      </div>
+      <div className="mt-4 grid grid-cols-3 gap-4">
+        <LikeButton post={post} />
+        <FollowButton post={post} />
+        <Button variant="primary" size="default">
+          <ShareIcon className="me-2 h-4 w-4" />
+          Share
+        </Button>
       </div>
     </article>
   );
