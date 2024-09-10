@@ -6,10 +6,18 @@ import { Post as PostComponent } from "./Post";
 import { Placeholder } from "./Placeholder";
 import { Button } from "./Button";
 import { useCallback, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./Dropdown";
+import { capitalize, spaced } from "../utils/string";
 
 export const Posts1 = () => {
   const [orderByString, setorderByString] = useState<
-    "publishedAt" | "reactionsCount"
+    "publishedAt" | "reactionsCount" | "lastActivityAt" | "repliesCount"
   >("publishedAt");
 
   const { loading, error, data, refetch } = useQuery(GET_POSTS, {
@@ -49,9 +57,35 @@ export const Posts1 = () => {
         >
           Most Popular
         </Button>
-        <Button toggle="inactive">
-          <MoreHorizontalIcon className="h-6 w-6" />
-        </Button>
+        {!["publishedAt", "reactionsCount"].includes(orderByString) ? (
+          <Button onClick={refetchPosts("reactionsCount")} toggle="active">
+            {spaced(capitalize(orderByString))}
+          </Button>
+        ) : null}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button toggle="inactive">
+              <MoreHorizontalIcon className="h-6 w-6" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel className="w-[300px] text-lg text-foreground-2">
+              Change Order
+            </DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={refetchPosts("lastActivityAt")}
+              className="text-lg"
+            >
+              Last Activity
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={refetchPosts("repliesCount")}
+              className="text-lg"
+            >
+              Replies Count
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className="flex flex-col gap-4">
         {loading ? (
