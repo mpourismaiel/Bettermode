@@ -9,8 +9,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-surface-1 hover:bg-surface-3",
+        primary: "bg-surface-3 hover:bg-surface-3/50",
       },
       toggle: {
+        default: "",
         active: "bg-surface-3 hover:bg-surface-3",
         inactive: "bg-surface-1 hover:bg-surface-3",
       },
@@ -21,7 +23,7 @@ const buttonVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      toggle: "active",
+      toggle: "default",
       size: "default",
     },
   },

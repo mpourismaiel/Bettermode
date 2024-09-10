@@ -2,7 +2,7 @@ import { useLazyQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import { LOGIN_GUEST } from "../queries/login";
+import LOGIN_GUEST from "../queries/login-guest.gql";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 
@@ -35,7 +35,7 @@ export const GlobalLayout = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-surface-2 text-foreground-1">
+    <div className="min-h-screen bg-surface-2 pb-12 text-foreground-1">
       {checkingLogin ? (
         <div>Loading...</div>
       ) : loginGuestError ? (

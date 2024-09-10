@@ -60,26 +60,30 @@ export const Prose = ({
         className="prose lg:prose-lg mb-4 max-w-full text-foreground-1"
         dangerouslySetInnerHTML={{ __html: prose }}
       />
-      <div className="mb-8 flex flex-col gap-2">
-        {usedAttachments.map(attachment => (
-          <div className="flex items-center justify-between gap-2 rounded-xl border border-foreground-3 px-6 py-4">
-            <div className="flex flex-col justify-start">
-              <div className="text-xl text-foreground-1">{attachment.name}</div>
-              <div className="text-lg text-foreground-2">
-                {humanReadableSize(attachment.size)}
+      {usedAttachments.length > 0 ? (
+        <div className="mb-8 flex flex-col gap-2">
+          {usedAttachments.map(attachment => (
+            <div className="flex items-center justify-between gap-2 rounded-xl border border-foreground-3 px-6 py-4">
+              <div className="flex flex-col justify-start">
+                <div className="text-xl text-foreground-1">
+                  {attachment.name}
+                </div>
+                <div className="text-lg text-foreground-2">
+                  {humanReadableSize(attachment.size)}
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <Button size="icon" onClick={previewAttachment(attachment)}>
+                  <EyeIcon className="h-6 w-6" />
+                </Button>
+                <Button size="icon" onClick={downloadAttachment(attachment)}>
+                  <DownloadIcon className="h-6 w-6" />
+                </Button>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button size="icon" onClick={previewAttachment(attachment)}>
-                <EyeIcon className="h-6 w-6" />
-              </Button>
-              <Button size="icon" onClick={downloadAttachment(attachment)}>
-                <DownloadIcon className="h-6 w-6" />
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 };

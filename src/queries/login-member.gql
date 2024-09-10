@@ -1,0 +1,13 @@
+mutation Loginuser($email: String!, $password: String!) {
+  loginNetwork(input: { usernameOrEmail: $email, password: $password }) {
+    accessToken
+    role {
+      name
+      scopes
+    }
+    member {
+      id
+      name
+    }
+  }
+}

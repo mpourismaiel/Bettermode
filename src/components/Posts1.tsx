@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { MoreHorizontalIcon } from "lucide-react";
 
-import { GET_POSTS } from "../queries/get-posts";
+import GET_POSTS from "../queries/get-posts.gql";
 import { Post as PostComponent } from "./Post";
 import { Placeholder } from "./Placeholder";
 import { Button } from "./Button";

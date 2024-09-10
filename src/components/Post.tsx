@@ -1,8 +1,9 @@
+import { useMemo } from "react";
 import dayjs from "dayjs";
 
 import { Emoji } from "./Emoji";
-import { useMemo } from "react";
 import { Prose } from "./Prose";
+import { Button } from "./Button";
 
 export const Post = ({
   summaryMode = false,
@@ -24,7 +25,7 @@ export const Post = ({
   return (
     <article
       key={post.id}
-      className="flex flex-col rounded-lg bg-surface-1 px-6 py-4"
+      className="flex flex-col rounded-lg bg-surface-1 px-6 py-4 shadow-xl"
     >
       <div className="mb-4 flex items-center">
         <img
@@ -55,12 +56,9 @@ export const Post = ({
       <Prose prose={content} attachments={post.attachments} />
       <div className="flex flex-wrap justify-start">
         {post.reactions.map((reaction: any) => (
-          <button
-            className="rounded-lg bg-surface-3 px-2 py-1"
-            key={reaction.reaction}
-          >
+          <Button variant="primary" size="icon" key={reaction.reaction}>
             <Emoji emoji={reaction.reaction} />
-          </button>
+          </Button>
         ))}
       </div>
     </article>
