@@ -1,17 +1,22 @@
 import { useLazyQuery } from "@apollo/client";
 import { useCallback, useEffect, useState } from "react";
-import { LOGIN_GUEST } from "../queries/login";
+import { Outlet } from "react-router-dom";
 
-export const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
+import { LOGIN_GUEST } from "../queries/login";
+import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
+
+export const GlobalLayout = () => {
+  const [checkingLogin, setCheckingLogin] = useState(true);
   const [hasToken, setHasToken] = useState(false);
 
-  const [loginGuest, { loading: loginGuestLoading, error: loginGuestError }] =
-    useLazyQuery(LOGIN_GUEST);
+  const [loginGuest, { error: loginGuestError }] = useLazyQuery(LOGIN_GUEST);
 
   const checkLogin = useCallback(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setHasToken(true);
+      setCheckingLogin(false);
       return;
     }
 
@@ -20,6 +25,7 @@ export const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
       onCompleted(data) {
         localStorage.setItem("token", data.tokens.accessToken);
         setHasToken(true);
+        setCheckingLogin(false);
       },
     });
   }, []);
@@ -28,17 +34,25 @@ export const GlobalLayout = ({ children }: { children: React.ReactNode }) => {
     checkLogin();
   }, []);
 
-  if (loginGuestLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (loginGuestError) {
-    return <div>Error: {loginGuestError.message}</div>;
-  }
-
-  if (!hasToken) {
-    return <div>No token</div>;
-  }
-
-  return children;
+  return (
+    <div className="min-h-screen bg-surface-2 text-foreground-1">
+      {checkingLogin ? (
+        <div>Loading...</div>
+      ) : loginGuestError ? (
+        <div>Error: {loginGuestError.message}</div>
+      ) : !hasToken ? (
+        <div>No token</div>
+      ) : (
+        <>
+          <Header />
+          <div className="custom-container-wrapper">
+            <div className="custom-container mt-4 grid grid-cols-12 lg:mt-8">
+              <Sidebar />
+              <Outlet />
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
