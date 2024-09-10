@@ -4,33 +4,54 @@ import { MoreHorizontalIcon } from "lucide-react";
 import { GET_POSTS } from "../queries/get-posts";
 import { Post as PostComponent } from "./Post";
 import { Placeholder } from "./Placeholder";
+import { Button } from "./Button";
+import { useCallback, useState } from "react";
 
 export const Posts1 = () => {
-  const { loading, error, data } = useQuery(GET_POSTS, {
+  const [orderByString, setorderByString] = useState<
+    "publishedAt" | "reactionsCount"
+  >("publishedAt");
+
+  const { loading, error, data, refetch } = useQuery(GET_POSTS, {
     variables: {
       limit: 10,
-      orderByString: "publishedAt",
       reverse: true,
+      orderByString,
     },
   });
+
+  const refetchPosts = useCallback(
+    (orderBy: typeof orderByString) => () => {
+      setorderByString(orderBy);
+      refetch({
+        limit: 10,
+        reverse: true,
+        orderByString,
+      });
+    },
+    [],
+  );
 
   if (error) return <p>Error : {error.message}</p>;
 
   return (
     <div className="col-span-9">
       <div className="mb-4 flex justify-end gap-4">
-        <button
-          className="rounded-lg bg-surface-3 px-4 py-2 text-base"
-          disabled
+        <Button
+          onClick={refetchPosts("publishedAt")}
+          toggle={orderByString === "publishedAt" ? "active" : "inactive"}
         >
           Newest
-        </button>
-        <button className="rounded-lg bg-surface-1 px-4 py-2 text-base">
+        </Button>
+        <Button
+          onClick={refetchPosts("reactionsCount")}
+          toggle={orderByString === "reactionsCount" ? "active" : "inactive"}
+        >
           Most Popular
-        </button>
-        <button className="rounded-lg bg-surface-1 px-4 py-2 text-base">
+        </Button>
+        <Button toggle="inactive">
           <MoreHorizontalIcon className="h-6 w-6" />
-        </button>
+        </Button>
       </div>
       <div className="flex flex-col gap-4">
         {loading ? (

@@ -1,9 +1,9 @@
-import { twMerge } from "tailwind-merge";
+import { cn } from "../utils/string";
 
 export const Placeholder = ({ className }: { className?: string }) => {
   return (
     <div
-      className={twMerge("animate-pulse rounded-md bg-surface-1/50", className)}
+      className={cn("animate-pulse rounded-md bg-surface-1/50", className)}
     />
   );
 };

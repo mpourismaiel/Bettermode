@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        "surface-1": "hsl(var(--color-surface-1))",
-        "surface-2": "hsl(var(--color-surface-2))",
-        "surface-3": "hsl(var(--color-surface-3))",
-        "foreground-1": "hsl(var(--color-foreground-1))",
-        "foreground-2": "hsl(var(--color-foreground-2))",
-        "foreground-3": "hsl(var(--color-foreground-3))",
+        "surface-1": "hsl(var(--surface-1))",
+        "surface-2": "hsl(var(--surface-2))",
+        "surface-3": "hsl(var(--surface-3))",
+        "foreground-1": "hsl(var(--foreground-1))",
+        "foreground-2": "hsl(var(--foreground-2))",
+        "foreground-3": "hsl(var(--foreground-3))",
       },
     },
   },

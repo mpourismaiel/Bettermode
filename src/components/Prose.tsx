@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DownloadIcon, EyeIcon } from "lucide-react";
 
 import { humanReadableSize } from "../utils/number";
-import { DownloadIcon, EyeIcon } from "lucide-react";
+import { Button } from "./Button";
 
 export const Prose = ({
   prose,
@@ -69,18 +70,12 @@ export const Prose = ({
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <button
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-1 transition-all duration-200 ease-out hover:bg-surface-3"
-                onClick={previewAttachment(attachment)}
-              >
+              <Button size="icon" onClick={previewAttachment(attachment)}>
                 <EyeIcon className="h-6 w-6" />
-              </button>
-              <button
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-1 transition-all duration-200 ease-out hover:bg-surface-3"
-                onClick={downloadAttachment(attachment)}
-              >
+              </Button>
+              <Button size="icon" onClick={downloadAttachment(attachment)}>
                 <DownloadIcon className="h-6 w-6" />
-              </button>
+              </Button>
             </div>
           </div>
         ))}
