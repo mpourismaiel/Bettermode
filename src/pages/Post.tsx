@@ -18,8 +18,6 @@ export const Post = () => {
 
   if (error) return <p>Error : {error.message}</p>;
 
-  console.log(data);
-
   return (
     <div className="col-span-9 flex flex-col gap-8">
       {loading ? (

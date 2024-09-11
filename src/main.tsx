@@ -11,6 +11,7 @@ import { GlobalLayout } from "./layouts/global.tsx";
 
 import "./index.css";
 import { Post } from "./pages/Post.tsx";
+import { Docs } from "./pages/Docs.tsx";
 
 dayjs.extend(relativeTime);
 
@@ -21,7 +22,10 @@ createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<GlobalLayout />}>
             <Route index element={<App />} />
-            <Route path="/post/:slugAndId" element={<Post />} />
+            <Route path="/post">
+              <Route path="/post/:slugAndId" element={<Post />} />
+            </Route>
+            <Route path="/docs" element={<Docs />} />
           </Route>
         </Routes>
       </BrowserRouter>

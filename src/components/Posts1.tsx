@@ -43,7 +43,7 @@ export const Posts1 = () => {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <div className="col-span-9">
+    <>
       <div className="mb-4 flex justify-end gap-4">
         <Button
           onClick={refetchPosts("publishedAt")}
@@ -100,6 +100,6 @@ export const Posts1 = () => {
           ))
         )}
       </div>
-    </div>
+    </>
   );
 };

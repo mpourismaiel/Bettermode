@@ -1,48 +1,79 @@
-  query GetPosts(
-    $after: String
-    $before: String
-    $excludePins: Boolean
-    $filterBy: [PostListFilterByInput!]
-    $limit: Int!
-    $offset: Int
-    $orderBy: PostListOrderByEnum
-    $orderByString: String
-    $postTypeIds: [String!]
-    $reverse: Boolean
-    $spaceIds: [ID!]
-    $query: String
+query GetPosts(
+  $after: String
+  $before: String
+  $excludePins: Boolean
+  $filterBy: [PostListFilterByInput!]
+  $limit: Int!
+  $offset: Int
+  $orderBy: PostListOrderByEnum
+  $orderByString: String
+  $postTypeIds: [String!]
+  $reverse: Boolean
+  $spaceIds: [ID!]
+  $query: String
+) {
+  posts(
+    after: $after
+    before: $before
+    excludePins: $excludePins
+    filterBy: $filterBy
+    limit: $limit
+    offset: $offset
+    orderBy: $orderBy
+    orderByString: $orderByString
+    postTypeIds: $postTypeIds
+    reverse: $reverse
+    spaceIds: $spaceIds
+    query: $query
   ) {
-    posts(
-      after: $after
-      before: $before
-      excludePins: $excludePins
-      filterBy: $filterBy
-      limit: $limit
-      offset: $offset
-      orderBy: $orderBy
-      orderByString: $orderByString
-      postTypeIds: $postTypeIds
-      reverse: $reverse
-      spaceIds: $spaceIds
-      query: $query
-    ) {
-      totalCount
-      pageInfo {
-        endCursor
-        hasNextPage
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    nodes {
+      id
+      slug
+      subscribersCount
+      postTypeId
+      reactionsCount
+      shortContent
+      publishedAt
+      totalRepliesCount
+      locked
+      title
+      description
+      thumbnail {
+        ... on Image {
+          urls {
+            full
+            large
+            medium
+            small
+            thumb
+          }
+        }
+        ... on Emoji {
+          id
+          text
+        }
+        ... on Glyph {
+          id
+          text
+          variant
+        }
+        ... on File {
+          id
+          name
+          url
+        }
       }
-      nodes {
-        id
-        slug
-        subscribersCount
-        postTypeId
-        reactionsCount
-        shortContent
-        publishedAt
-        totalRepliesCount
-        locked
-        title
+      primaryReactionType
+      lastActivityAt
+      language
+      customSeoDetail {
         description
+        noIndex
         thumbnail {
           ... on Image {
             urls {
@@ -68,13 +99,95 @@
             url
           }
         }
-        primaryReactionType
-        lastActivityAt
-        language
-        customSeoDetail {
+        title
+        canonicalUrl
+      }
+      authMemberProps {
+        context
+        scopes
+        subscribed
+        permissions {
+          name
+          isAuthorized {
+            authorized
+            reason
+            requiredPlan
+          }
+          inputPermissions {
+            path
+            isAuthorized {
+              authorized
+              reason
+              requiredPlan
+            }
+          }
+          outputPermissions {
+            path
+            isAuthorized {
+              authorized
+              reason
+              requiredPlan
+            }
+          }
+        }
+        availableReplyTypes {
+          __typename
+          archived
+          allowedEmojis
+          context
+          createdAt
+          forbiddenEmojis
+          id
+          languageTemplate
+          name
           description
-          noIndex
-          thumbnail {
+          nativeFieldsTemplates {
+            description
+            thumbnailId
+            title
+          }
+          negativeReactions
+          pluralName
+          positiveReactions
+          primaryReactionType
+          shortContentTemplate
+          singleChoiceReactions
+          allowedReactions
+          customReactions {
+            __typename
+            activeColor
+            activeGlyphId
+            activeName
+            color
+            glyphId
+            key
+            name
+          }
+          slug
+          titleTemplate
+          updatedAt
+          mappings {
+            key
+            field
+            type
+            title
+            description
+            required
+            isMainContent
+            isSearchable
+            default
+          }
+        }
+        canReact
+      }
+      owner {
+        member {
+          displayName
+          name
+          id
+          username
+          tagline
+          profilePicture {
             ... on Image {
               urls {
                 full
@@ -99,100 +212,65 @@
               url
             }
           }
-          title
-          canonicalUrl
-        }
-        owner {
-          member {
-            displayName
-            name
-            id
-            username
-            tagline
-            profilePicture {
-              ... on Image {
-                urls {
-                  full
-                  large
-                  medium
-                  small
-                  thumb
-                }
-              }
-              ... on Emoji {
-                id
-                text
-              }
-              ... on Glyph {
-                id
-                text
-                variant
-              }
-              ... on File {
-                id
-                name
-                url
-              }
-            }
-            badges {
+          badges {
+            backgroundColor
+            badgeId
+            imageId
+            longDescription
+            text
+            shortDescription
+            textColor
+            type
+            badge {
+              active
               backgroundColor
-              badgeId
+              daysUntilExpired
+              id
               imageId
               longDescription
-              text
+              name
               shortDescription
               textColor
+              text
               type
-              badge {
-                active
-                backgroundColor
-                daysUntilExpired
-                id
-                imageId
-                longDescription
-                name
-                shortDescription
-                textColor
-                text
-                type
-                settings {
-                  key
-                  value
+              settings {
+                key
+                value
+              }
+              image {
+                ... on Image {
+                  urls {
+                    full
+                    large
+                    medium
+                    small
+                    thumb
+                  }
                 }
-                image {
-                  ... on Image {
-                    urls {
-                      full
-                      large
-                      medium
-                      small
-                      thumb
-                    }
-                  }
-                  ... on Emoji {
-                    id
-                    text
-                  }
-                  ... on Glyph {
-                    id
-                    text
-                    variant
-                  }
-                  ... on File {
-                    id
-                    name
-                    url
-                  }
+                ... on Emoji {
+                  id
+                  text
+                }
+                ... on Glyph {
+                  id
+                  text
+                  variant
+                }
+                ... on File {
+                  id
+                  name
+                  url
                 }
               }
             }
           }
         }
-        reactions {
-          count
-          reacted
-          reaction
-        }
+      }
+      reactions {
+        count
+        reacted
+        reaction
       }
     }
   }
+}
