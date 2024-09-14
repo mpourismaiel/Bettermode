@@ -15,7 +15,7 @@ import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 
 export const FollowButton = ({ post }: { post: any }) => {
   return (
-    <Button variant="primary" size="default">
+    <Button variant="secondary" size="default">
       {post.authMemberProps.subscribed ? (
         <>
           <BellRingIcon className="me-2 h-4 w-4" />
@@ -41,7 +41,7 @@ const LikeButton = ({ post }: { post: any }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="primary"
+          variant="secondary"
           toggle={authReaction ? "active" : "default"}
           size="default"
         >
@@ -123,7 +123,7 @@ export const Post = ({
       <Prose prose={content} attachments={post.attachments} />
       <div className="flex flex-wrap justify-start">
         {post.reactions.map((reaction: any) => (
-          <Button variant="primary" size="icon" key={reaction.reaction}>
+          <Button variant="secondary" size="icon" key={reaction.reaction}>
             <Emoji emoji={reaction.reaction} />
           </Button>
         ))}
@@ -131,7 +131,7 @@ export const Post = ({
       <div className="mt-4 grid grid-cols-3 gap-4">
         <LikeButton post={post} />
         <FollowButton post={post} />
-        <Button variant="primary" size="default">
+        <Button variant="secondary" size="default">
           <ShareIcon className="me-2 h-4 w-4" />
           Share
         </Button>

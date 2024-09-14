@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 :root {
+  --primary: 217 91% 60%;
+  --secondary: 217 33% 17%;
   --surface-1: 222 47% 11%;
   --surface-2: 229 84% 5%;
   --surface-3: 217 33% 17%;
@@ -12,6 +14,8 @@
 }
 
 .dark {
+  --primary: 217 91% 60%;
+  --secondary: 217 33% 17%;
   --surface-1: 222 47% 11%;
   --surface-2: 229 84% 5%;
   --surface-3: 217 33% 17%;

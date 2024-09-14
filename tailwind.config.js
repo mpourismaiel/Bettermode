@@ -4,6 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        "primary": "hsl(var(--primary))",
+        "secondary": "hsl(var(--secondary))",
         "surface-1": "hsl(var(--surface-1))",
         "surface-2": "hsl(var(--surface-2))",
         "surface-3": "hsl(var(--surface-3))",

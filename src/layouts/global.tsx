@@ -47,10 +47,10 @@ export const GlobalLayout = () => {
           <Header />
           <div className="custom-container-wrapper">
             <div className="custom-container mt-4 grid grid-cols-12 gap-6 lg:mt-8">
-              <div className="col-span-4">
+              <div className="col-span-3">
                 <Sidebar />
               </div>
-              <div className="col-span-8">
+              <div className="col-span-9">
                 <Outlet />
               </div>
             </div>
