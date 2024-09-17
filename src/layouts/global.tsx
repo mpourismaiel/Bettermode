@@ -1,14 +1,14 @@
 import { useLazyQuery } from "@apollo/client";
+import { Loader2Icon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
+import { Alert } from "../components/Alert";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 
-import LOGIN_GUEST from "../queries/login-guest.gql";
 import LOGIN_CHECK from "../queries/login-check.gql";
-import { Loader2Icon } from "lucide-react";
-import { Alert } from "../components/Alert";
+import LOGIN_GUEST from "../queries/login-guest.gql";
 
 export const GlobalLayout = () => {
   const [user, setUser] = useState(null);

@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
 
-import GET_REPLIES from "../queries/post-replies.gql";
 import { Placeholder } from "./Placeholder";
 import { Reply } from "./Reply";
 import { ReplyCompose } from "./ReplyCompose";
+
+import GET_REPLIES from "../queries/post-replies.gql";
 
 export const Replies = ({ postId }: { postId: string }) => {
   const { loading, error, data } = useQuery(GET_REPLIES, {

@@ -1,17 +1,17 @@
 import { ApolloProvider } from "@apollo/client";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { App } from "./pages/App.tsx";
-import { client } from "./utils/apollo.ts";
-import { GlobalLayout } from "./layouts/global.tsx";
-
 import "./index.css";
-import { Post } from "./pages/Post.tsx";
-import { Docs } from "./pages/Docs.tsx";
+
+import { GlobalLayout } from "./layouts/global";
+import { App } from "./pages/App";
+import { Docs } from "./pages/Docs";
+import { Post } from "./pages/Post";
+import { client } from "./utils/apollo";
 
 dayjs.extend(relativeTime);
 

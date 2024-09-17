@@ -1,8 +1,9 @@
 import { DownloadIcon, EyeIcon } from "lucide-react";
+import { useCallback } from "react";
+
+import { Button } from "./Button";
 
 import { humanReadableSize } from "../utils/number";
-import { Button } from "./Button";
-import { useCallback } from "react";
 
 export const ProseAttachment = ({ attachment }: { attachment: any }) => {
   const previewAttachment = useCallback(

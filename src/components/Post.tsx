@@ -1,9 +1,8 @@
-import { useMemo } from "react";
-import { BellIcon, BellRingIcon, ShareIcon, ThumbsUpIcon } from "lucide-react";
 import dayjs from "dayjs";
+import { BellIcon, BellRingIcon, ShareIcon, ThumbsUpIcon } from "lucide-react";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
-import { Emoji } from "./Emoji";
-import { Prose } from "./Prose";
 import { Button } from "./Button";
 import {
   DropdownMenu,
@@ -11,8 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./Dropdown";
+import { Emoji } from "./Emoji";
+import { Prose } from "./Prose";
+
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
-import { Link } from "react-router-dom";
 
 export const FollowButton = ({ post }: { post: any }) => {
   return (

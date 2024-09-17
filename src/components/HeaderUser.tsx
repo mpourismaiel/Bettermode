@@ -1,11 +1,11 @@
 import { Loader2Icon } from "lucide-react";
 
-import { Login } from "./Login";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./Dropdown";
+import { Login } from "./Login";
 
 export const HeaderUser = ({
   user,

@@ -1,14 +1,14 @@
-  query LoginGuest($networkDomain: String!) {
-    tokens(networkDomain: $networkDomain) {
-      accessToken
-      refreshToken
-      role {
-        name
-        scopes
-      }
-      member {
-        id
-        name
-      }
+query LoginGuest($networkDomain: String!) {
+  tokens(networkDomain: $networkDomain) {
+    accessToken
+    refreshToken
+    role {
+      name
+      scopes
+    }
+    member {
+      id
+      name
     }
   }
+}

@@ -1,8 +1,9 @@
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import viteLogo from "../assets/vite.svg";
 import { HeaderUser } from "./HeaderUser";
+
+import viteLogo from "../assets/vite.svg";
 
 export const Header = ({
   user,

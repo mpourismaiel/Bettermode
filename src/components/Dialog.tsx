@@ -1,14 +1,14 @@
 // Courtesy of Shadcn: https://ui.shadcn.com/docs/components/dialog
 import * as DialogRadix from "@radix-ui/react-dialog";
+import { FullscreenIcon, XIcon } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   ElementRef,
-  forwardRef,
   HTMLAttributes,
+  forwardRef,
   useCallback,
   useState,
 } from "react";
-import { FullscreenIcon, XIcon } from "lucide-react";
 
 import { cn } from "../utils/string";
 

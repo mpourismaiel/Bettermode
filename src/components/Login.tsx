@@ -1,6 +1,8 @@
-import { SendHorizonal } from "lucide-react";
 import { ApolloError, useMutation } from "@apollo/client";
+import { SendHorizonal } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 
+import { Alert } from "./Alert";
 import { Button } from "./Button";
 import {
   Dialog,
@@ -12,9 +14,8 @@ import {
 import { Input } from "./Input";
 
 import LOGIN_USER from "../queries/login-user.gql";
-import { useCallback, useEffect, useState } from "react";
+
 import { cn } from "../utils/string";
-import { Alert } from "./Alert";
 
 const DEFAULT_ERRORS = {
   email: "",

@@ -1,11 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { MoreHorizontalIcon } from "lucide-react";
-
-import GET_POSTS from "../queries/get-posts.gql";
-import { Post as PostComponent } from "./Post";
-import { Placeholder } from "./Placeholder";
-import { Button } from "./Button";
 import { useCallback, useState } from "react";
+
+import { Button } from "./Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +10,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./Dropdown";
+import { Placeholder } from "./Placeholder";
+import { Post as PostComponent } from "./Post";
+
+import GET_POSTS from "../queries/get-posts.gql";
+
 import { capitalize, spaced } from "../utils/string";
 
 export const Posts1 = () => {

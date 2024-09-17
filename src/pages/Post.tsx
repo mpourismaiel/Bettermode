@@ -1,11 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
+import { Placeholder } from "../components/Placeholder";
 import { Post as PostComponent } from "../components/Post";
+import { Replies } from "../components/Replies";
 
 import GET_POST from "../queries/get-post.gql";
-import { Placeholder } from "../components/Placeholder";
-import { Replies } from "../components/Replies";
 
 export const Post = () => {
   const { slugAndId } = useParams();

@@ -1,6 +1,6 @@
 // Courtesy of Shadcn: https://ui.shadcn.com/docs/components/dropdown-menu
-import * as React from "react";
 import * as DropdownMenuRadix from "@radix-ui/react-dropdown-menu";
+import * as React from "react";
 
 import { cn } from "../utils/string";
 
