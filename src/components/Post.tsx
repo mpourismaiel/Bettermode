@@ -1,30 +1,13 @@
 import dayjs from "dayjs";
-import { BellIcon, BellRingIcon, ShareIcon } from "lucide-react";
+import { ShareIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "./Button";
 import { Emoji } from "./Emoji";
+import { PostFollowButton } from "./PostFollowButton";
 import { PostLikeButton } from "./PostLikeButton";
 import { Prose } from "./Prose";
-
-export const FollowButton = ({ post }: { post: any }) => {
-  return (
-    <Button variant="secondary" size="default">
-      {post.authMemberProps.subscribed ? (
-        <>
-          <BellRingIcon className="me-2 h-4 w-4" />
-          Followed
-        </>
-      ) : (
-        <>
-          <BellIcon className="me-2 h-4 w-4" />
-          Follow
-        </>
-      )}
-    </Button>
-  );
-};
 
 export const Post = ({
   summaryMode = false,
@@ -124,7 +107,7 @@ export const Post = ({
       </div>
       <div className="mt-4 grid grid-cols-3 gap-4">
         <PostLikeButton post={post} updateReactions={updateReactions} />
-        <FollowButton post={post} />
+        <PostFollowButton post={post} />
         <Button variant="secondary" size="default">
           <ShareIcon className="me-2 h-4 w-4" />
           Share

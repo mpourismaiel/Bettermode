@@ -1,0 +1,6 @@
+mutation Subscribe($publisherId: String!) {
+  subscribe(publisherId: $publisherId) {
+    __typename
+    status
+  }
+}
