@@ -1,19 +1,12 @@
 import dayjs from "dayjs";
-import { BellIcon, BellRingIcon, ShareIcon, ThumbsUpIcon } from "lucide-react";
-import { useMemo } from "react";
+import { BellIcon, BellRingIcon, ShareIcon } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "./Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./Dropdown";
 import { Emoji } from "./Emoji";
+import { PostLikeButton } from "./PostLikeButton";
 import { Prose } from "./Prose";
-
-import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 
 export const FollowButton = ({ post }: { post: any }) => {
   return (
@@ -33,47 +26,6 @@ export const FollowButton = ({ post }: { post: any }) => {
   );
 };
 
-const LikeButton = ({ post }: { post: any }) => {
-  const authReaction = useMemo(
-    () => post.reactions.some(({ reacted }) => reacted),
-    [post],
-  );
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="secondary"
-          toggle={authReaction ? "active" : "default"}
-          size="default"
-        >
-          {authReaction ? (
-            <>
-              <span className="me-2">{authReaction.reaction}</span>
-              {emojiVerbsMap[authReaction.reaction as keyof typeof emojiMap]}
-            </>
-          ) : (
-            <>
-              <ThumbsUpIcon className="me-2 h-4 w-4" />
-              Like
-            </>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex h-[80px] items-center">
-        {Object.keys(emojiMap).map(key => (
-          <DropdownMenuItem
-            key={key}
-            className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl text-xl transition-all duration-200 ease-out hover:text-3xl"
-          >
-            {emojiMap[key as keyof typeof emojiMap]}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
 export const Post = ({
   summaryMode = false,
   post,
@@ -81,6 +33,8 @@ export const Post = ({
   summaryMode?: boolean;
   post: any;
 }) => {
+  const [reactions, setReactions] = useState(post.reactions);
+
   const content = useMemo(
     () =>
       summaryMode
@@ -89,6 +43,44 @@ export const Post = ({
             post.mappingFields.find(({ key }) => key === "content")?.value,
           ) || "",
     [post, summaryMode],
+  );
+
+  const updateReactions = useCallback(
+    (newReaction: string) => {
+      // Just a bit complicated so described here:
+      // If the new reaction is already listed, add to its count. Otherwise, add a new reaction.
+      // If authenticated user has already reacted, reduce the count of that reaction and remove it if the count is 0.
+      const reactionsToSet = reactions
+        .map(reaction => {
+          if (reaction.reacted) {
+            return {
+              ...reaction,
+              reacted: false,
+              count: reaction.count - 1,
+            };
+          } else if (reaction.reaction === newReaction) {
+            return {
+              ...reaction,
+              reacted: true,
+              count: reaction.count + 1,
+            };
+          }
+
+          return reaction;
+        })
+        .filter(({ count }) => count > 0);
+
+      if (!reactions.some(({ reaction }) => reaction === newReaction)) {
+        reactionsToSet.push({
+          reaction: newReaction,
+          reacted: true,
+          count: 1,
+        });
+      }
+
+      setReactions(reactionsToSet);
+    },
+    [reactions],
   );
 
   return (
@@ -124,14 +116,14 @@ export const Post = ({
       </div>
       <Prose prose={content} attachments={post.attachments} />
       <div className="flex flex-wrap justify-start">
-        {post.reactions.map((reaction: any) => (
+        {reactions.map((reaction: any) => (
           <Button variant="secondary" size="icon" key={reaction.reaction}>
             <Emoji emoji={reaction.reaction} />
           </Button>
         ))}
       </div>
       <div className="mt-4 grid grid-cols-3 gap-4">
-        <LikeButton post={post} />
+        <PostLikeButton post={post} updateReactions={updateReactions} />
         <FollowButton post={post} />
         <Button variant="secondary" size="default">
           <ShareIcon className="me-2 h-4 w-4" />

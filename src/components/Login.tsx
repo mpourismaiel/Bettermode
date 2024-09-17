@@ -31,6 +31,7 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ ...DEFAULT_ERRORS });
+
   const [login, { loading, reset }] = useMutation(LOGIN_USER);
 
   const validateForm = useCallback(() => {
