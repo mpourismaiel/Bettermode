@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "./Dropdown";
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
+import { Link } from "react-router-dom";
 
 export const FollowButton = ({ post }: { post: any }) => {
   return (
@@ -101,18 +102,18 @@ export const Post = ({
           className="me-4 h-12 w-12 rounded-full"
         />
         <div className="flex flex-col">
-          <a
-            href={`/post/${post.slug}-${post.id}`}
+          <Link
+            to={`/post/${post.slug}-${post.id}`}
             className="mb-1 text-lg font-bold"
           >
             <h2 className="text-2xl font-bold">{post.title}</h2>
-          </a>
+          </Link>
           <div className="flex items-center">
-            <a href={`/member/${post.owner.member.id}`} className="me-2">
+            <Link to={`/member/${post.owner.member.id}`} className="me-2">
               <h3 className="text-sm text-foreground-2">
                 {post.owner.member.displayName || post.owner.member.name}
               </h3>
-            </a>
+            </Link>
             <span className="me-2 text-foreground-2">•</span>
             <time className="text-sm text-foreground-2">
               {dayjs().to(post.publishedAt)}

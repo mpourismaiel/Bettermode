@@ -1,8 +1,18 @@
 import { SearchIcon } from "lucide-react";
-import viteLogo from "../assets/vite.svg";
 import { Link } from "react-router-dom";
 
-export const Header = () => {
+import viteLogo from "../assets/vite.svg";
+import { HeaderUser } from "./HeaderUser";
+
+export const Header = ({
+  user,
+  setUser,
+  shouldPopup,
+}: {
+  user: any;
+  setUser: (user: any) => void;
+  shouldPopup?: boolean;
+}) => {
   return (
     <header className="custom-container-wrapper bg-surface-1">
       <nav className="custom-container flex items-center justify-between py-4">
@@ -30,9 +40,7 @@ export const Header = () => {
             />
           </div>
         </div>
-        <div className="user">
-          <img src={viteLogo} alt="Technical Challenge" />
-        </div>
+        <HeaderUser user={user} setUser={setUser} shouldPopup={shouldPopup} />
       </nav>
     </header>
   );

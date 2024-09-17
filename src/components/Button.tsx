@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-surface-1 hover:bg-surface-3",
-        primary: "bg-primary hover:bg-primary/50",
+        primary: "bg-primary hover:bg-primary/50 text-foreground-1",
         secondary: "bg-secondary hover:bg-secondary/50",
       },
       toggle: {
@@ -19,6 +19,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "rounded-lg px-4 py-2 text-lg",
+        sm: "rounded-lg px-4 py-2 text-sm",
         icon: "h-12 w-12 rounded-xl",
       },
     },

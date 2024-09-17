@@ -6,7 +6,7 @@ export const SidebarLink = ({ className, ...props }: NavLinkProps) => {
     <NavLink
       className={({ isActive }) =>
         cn(
-          "flex items-center rounded bg-transparent px-4 py-2 text-base font-thin transition-colors duration-200 ease-out hover:bg-surface-3",
+          "flex items-center rounded bg-transparent px-4 py-2 text-lg font-thin transition-colors duration-200 ease-out hover:bg-surface-3",
           {
             "bg-surface-3 font-normal": isActive,
           },
