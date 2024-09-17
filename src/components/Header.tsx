@@ -1,30 +1,31 @@
-import { SearchIcon } from "lucide-react";
+import { Loader2Icon, SearchIcon } from "lucide-react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { HeaderUser } from "./HeaderUser";
 
-import viteLogo from "../assets/vite.svg";
+import { GlobalContext } from "../contexts/global";
 
-export const Header = ({
-  user,
-  setUser,
-  shouldPopup,
-}: {
-  user: any;
-  setUser: (user: any) => void;
-  shouldPopup?: boolean;
-}) => {
+export const Header = () => {
+  const { network, networkLoading } = useContext(GlobalContext);
+
   return (
     <header className="custom-container-wrapper bg-surface-1">
       <nav className="custom-container flex items-center justify-between py-4">
-        <div className="logo">
-          <h1 className="hidden" aria-label="Logo" aria-hidden hidden>
-            Technical Challenge
-          </h1>
-          <Link to="/">
-            <img src={viteLogo} alt="Technical Challenge" />
-          </Link>
-        </div>
+        {networkLoading ? (
+          <Loader2Icon className="animate-spin h-10 w-10" />
+        ) : (
+          <div>
+            <h1 className="sr-only">{network.name}</h1>
+            <Link to="/">
+              <img
+                src={network.images.darkLogo.url}
+                alt={network.name}
+                className="h-10"
+              />
+            </Link>
+          </div>
+        )}
         <div className="search">
           <div className="flex items-center rounded-full bg-surface-3">
             <label
@@ -41,7 +42,7 @@ export const Header = ({
             />
           </div>
         </div>
-        <HeaderUser user={user} setUser={setUser} shouldPopup={shouldPopup} />
+        <HeaderUser />
       </nav>
     </header>
   );

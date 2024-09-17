@@ -1,4 +1,5 @@
 import { Loader2Icon } from "lucide-react";
+import { useContext } from "react";
 
 import {
   DropdownMenu,
@@ -7,15 +8,10 @@ import {
 } from "./Dropdown";
 import { Login } from "./Login";
 
-export const HeaderUser = ({
-  user,
-  setUser,
-  shouldPopup,
-}: {
-  user: any;
-  setUser: (user: any) => void;
-  shouldPopup?: boolean;
-}) => {
+import { GlobalContext } from "../contexts/global";
+
+export const HeaderUser = () => {
+  const { user, shouldLoginPopup } = useContext(GlobalContext);
   return (
     <div className="flex">
       {user ? (
@@ -30,7 +26,7 @@ export const HeaderUser = ({
           <DropdownMenuContent align="end"></DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Login setUser={setUser} shouldPopup={shouldPopup} />
+        <Login shouldPopup={shouldLoginPopup} />
       )}
     </div>
   );

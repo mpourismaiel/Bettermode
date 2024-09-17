@@ -1,0 +1,54 @@
+query GetNetwork {
+  network {
+    name
+    description
+    images {
+      lightLogo {
+        ... on Image {
+          __typename
+          id
+          url
+        }
+        ... on Emoji {
+          __typename
+          id
+          text
+        }
+        ... on Glyph {
+          __typename
+          id
+          text
+          variant
+        }
+        ... on File {
+          id
+          name
+          url
+        }
+      }
+      darkLogo {
+        ... on Image {
+          __typename
+          id
+          url
+        }
+        ... on Emoji {
+          __typename
+          id
+          text
+        }
+        ... on Glyph {
+          __typename
+          id
+          text
+          variant
+        }
+        ... on File {
+          id
+          name
+          url
+        }
+      }
+    }
+  }
+}

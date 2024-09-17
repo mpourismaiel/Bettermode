@@ -1,6 +1,6 @@
 import { ApolloError, useMutation } from "@apollo/client";
-import { SendHorizonal } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { Loader2Icon, SendHorizonal } from "lucide-react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { Alert } from "./Alert";
 import { Button } from "./Button";
@@ -15,6 +15,7 @@ import { Input } from "./Input";
 
 import LOGIN_USER from "../queries/login-user.gql";
 
+import { GlobalContext } from "../contexts/global";
 import { cn } from "../utils/string";
 
 const DEFAULT_ERRORS = {
@@ -23,18 +24,14 @@ const DEFAULT_ERRORS = {
   form: "",
 };
 
-export const Login = ({
-  setUser,
-  shouldPopup = false,
-}: {
-  setUser: (user: any) => void;
-  shouldPopup?: boolean;
-}) => {
+export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
+  const { setUser } = useContext(GlobalContext);
+
   const [isOpen, setIsOpen] = useState(shouldPopup);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ ...DEFAULT_ERRORS });
-  const [login, { data, loading, error, reset }] = useMutation(LOGIN_USER);
+  const [login, { loading, reset }] = useMutation(LOGIN_USER);
 
   const validateForm = useCallback(() => {
     const errorsToSet = { ...DEFAULT_ERRORS };
@@ -144,9 +141,18 @@ export const Login = ({
             </p>
           </div>
           <div className="flex justify-end">
-            <Button variant="primary" size="sm">
-              <SendHorizonal className="me-2 h-4 w-4" />
-              Login
+            <Button variant="primary" size="sm" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2Icon className="h-4 w-4 animate-spin me-2" />
+                  Logging in
+                </>
+              ) : (
+                <>
+                  <SendHorizonal className="me-2 h-4 w-4" />
+                  Login
+                </>
+              )}
             </Button>
           </div>
         </form>

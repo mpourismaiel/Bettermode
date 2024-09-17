@@ -7,8 +7,11 @@ import { Alert } from "../components/Alert";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 
+import GET_NETWORK from "../queries/get-network.gql";
 import LOGIN_CHECK from "../queries/login-check.gql";
 import LOGIN_GUEST from "../queries/login-guest.gql";
+
+import { GlobalContext } from "../contexts/global";
 
 export const GlobalLayout = () => {
   const [user, setUser] = useState(null);
@@ -17,18 +20,25 @@ export const GlobalLayout = () => {
   const [loginPopup, setLoginPopup] = useState(false);
 
   const [loginGuest, { error: loginGuestError }] = useLazyQuery(LOGIN_GUEST);
-  const [fetchUser, { data, loading }] = useLazyQuery(LOGIN_CHECK);
+  const [fetchUser] = useLazyQuery(LOGIN_CHECK);
+  const [
+    fetchNetwork,
+    { data: networkData, loading: networkLoading, error: networkError },
+  ] = useLazyQuery(GET_NETWORK);
 
-  const getGuestToken = useCallback(() => {
-    loginGuest({
+  const getNetwork = useCallback(async () => {
+    fetchNetwork();
+  }, [fetchNetwork]);
+
+  const getGuestToken = useCallback(async () => {
+    const response = await loginGuest({
       variables: { networkDomain: import.meta.env.VITE_NETWORK_DOMAIN },
-      onCompleted(data) {
-        localStorage.setItem("token", data.tokens.accessToken);
-        setHasToken(true);
-        setCheckingLogin(false);
-      },
     });
-  }, [loginGuest]);
+    localStorage.setItem("token", response.data.tokens.accessToken);
+    getNetwork();
+    setHasToken(true);
+    setCheckingLogin(false);
+  }, [loginGuest, getNetwork]);
 
   const checkLogin = useCallback(async () => {
     const token = localStorage.getItem("token");
@@ -40,6 +50,7 @@ export const GlobalLayout = () => {
     try {
       const response = await fetchUser();
       setUser(response.data.authMember);
+      getNetwork();
 
       setHasToken(true);
       setCheckingLogin(false);
@@ -49,41 +60,52 @@ export const GlobalLayout = () => {
       setLoginPopup(true);
       getGuestToken();
     }
-  }, [fetchUser, getGuestToken]);
+  }, [fetchUser, getGuestToken, getNetwork]);
 
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);
 
   return (
-    <div className="min-h-screen bg-surface-2 pb-12 text-foreground-1">
-      {checkingLogin || loginGuestError || !hasToken ? (
-        <div className="flex h-screen w-screen items-center justify-center">
-          {checkingLogin ? (
-            <Loader2Icon className="h-12 w-12 animate-spin" />
-          ) : loginGuestError || !hasToken ? (
-            <Alert>
-              {loginGuestError
-                ? `Error: ${loginGuestError?.message || "Something went wrong!"}`
-                : `Something seriously went wrong! Please try again`}
-            </Alert>
-          ) : null}
-        </div>
-      ) : (
-        <>
-          <Header user={user} setUser={setUser} shouldPopup={loginPopup} />
-          <div className="custom-container-wrapper">
-            <div className="custom-container mt-4 grid grid-cols-12 gap-6 lg:mt-8">
-              <div className="col-span-3">
-                <Sidebar />
-              </div>
-              <div className="col-span-9">
-                <Outlet />
+    <GlobalContext.Provider
+      value={{
+        user,
+        setUser,
+        shouldLoginPopup: loginPopup,
+        networkLoading,
+        networkError,
+        network: networkData?.network,
+      }}
+    >
+      <div className="min-h-screen bg-surface-2 pb-12 text-foreground-1">
+        {checkingLogin || loginGuestError || !hasToken ? (
+          <div className="flex h-screen w-screen items-center justify-center">
+            {checkingLogin ? (
+              <Loader2Icon className="h-12 w-12 animate-spin" />
+            ) : loginGuestError || !hasToken ? (
+              <Alert>
+                {loginGuestError
+                  ? `Error: ${loginGuestError?.message || "Something went wrong!"}`
+                  : `Something seriously went wrong! Please try again`}
+              </Alert>
+            ) : null}
+          </div>
+        ) : (
+          <>
+            <Header />
+            <div className="custom-container-wrapper">
+              <div className="custom-container mt-4 grid grid-cols-12 gap-6 lg:mt-8">
+                <div className="col-span-3">
+                  <Sidebar />
+                </div>
+                <div className="col-span-9">
+                  <Outlet />
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+    </GlobalContext.Provider>
   );
 };
