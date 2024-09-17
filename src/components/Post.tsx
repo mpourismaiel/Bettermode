@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ShareIcon } from "lucide-react";
+import { LockIcon, ShareIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -82,7 +82,10 @@ export const Post = ({
             to={`/post/${post.slug}-${post.id}`}
             className="mb-1 text-lg font-bold"
           >
-            <h2 className="text-2xl font-bold">{post.title}</h2>
+            <h2 className="text-2xl font-bold flex items-center">
+              <LockIcon className="me-2 h-4 w-4" />
+              {post.title}
+            </h2>
           </Link>
           <div className="flex items-center">
             <Link to={`/member/${post.owner.member.id}`} className="me-2">
