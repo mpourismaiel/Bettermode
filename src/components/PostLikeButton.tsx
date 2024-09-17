@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { ThumbsUpIcon } from "lucide-react";
+import { Loader2Icon, ThumbsUpIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 import { Button } from "./Button";
@@ -14,11 +14,6 @@ import POST_ADD_REACTION from "../queries/post-add-reaction.gql";
 
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 import { cn } from "../utils/string";
-
-const vars = {
-  postId: "Xiqa0k7MeqMxweG",
-  input: { reaction: "tada", overrideSingleChoiceReactions: true },
-};
 
 export const PostLikeButton = ({
   post,
@@ -64,7 +59,11 @@ export const PostLikeButton = ({
         >
           {authReaction ? (
             <>
-              <span className="me-2">{emojiMap[authReaction]}</span>
+              {loading ? (
+                <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+              ) : (
+                <span className="me-2">{emojiMap[authReaction]}</span>
+              )}
               {emojiVerbsMap[authReaction as keyof typeof emojiMap]}
             </>
           ) : (
