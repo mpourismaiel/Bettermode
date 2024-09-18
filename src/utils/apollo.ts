@@ -16,7 +16,43 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const mergeNodesAndPageInfo = (existing = { nodes: [] }, incoming) => {
+  return {
+    ...existing,
+    ...incoming,
+    nodes: [...existing.nodes, ...incoming.nodes],
+  };
+};
+
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          posts: {
+            keyArgs: [
+              "excludePins",
+              "filterBy",
+              "orderBy",
+              "orderByString",
+              "postTypeIds",
+              "reverse",
+              "spaceIds",
+              "query",
+            ],
+            merge: mergeNodesAndPageInfo,
+          },
+          postReactionParticipants: {
+            keyArgs: ["limit", "postId", "reaction", "reverse"],
+            merge: mergeNodesAndPageInfo,
+          },
+          replies: {
+            keyArgs: ["postId", "reverse", "orderBy", "limit"],
+            merge: mergeNodesAndPageInfo,
+          },
+        },
+      },
+    },
+  }),
 });

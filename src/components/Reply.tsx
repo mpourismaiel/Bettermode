@@ -12,7 +12,7 @@ export const Reply = ({ reply }: { reply: any }) => {
     <div className="flex gap-6">
       <img
         src={reply.owner.member.profilePicture.urls.thumb}
-        alt={reply.owner.member.displayName || reply.owner.member.name}
+        alt={`${reply.owner.member.displayName || reply.owner.member.name} Profile Picture`}
         className="mt-2 h-16 w-16 rounded-full"
       />
       <div className="flex flex-col gap-2">

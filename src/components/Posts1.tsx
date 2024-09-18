@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { MoreHorizontalIcon } from "lucide-react";
+import { Loader2Icon, MoreHorizontalIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
 import { Button } from "./Button";
@@ -15,19 +15,20 @@ import { Post as PostComponent } from "./Post";
 
 import GET_POSTS from "../queries/get-posts.gql";
 
-import { capitalize, spaced } from "../utils/string";
+import { capitalize, cn, spaced } from "../utils/string";
 
 export const Posts1 = () => {
   const [orderByString, setorderByString] = useState<
     "publishedAt" | "reactionsCount" | "lastActivityAt" | "repliesCount"
   >("publishedAt");
 
-  const { loading, error, data, refetch } = useQuery(GET_POSTS, {
+  const { loading, error, data, refetch, fetchMore } = useQuery(GET_POSTS, {
     variables: {
       limit: 10,
       reverse: true,
       orderByString,
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   const refetchPosts = useCallback(
@@ -41,6 +42,14 @@ export const Posts1 = () => {
     },
     [],
   );
+
+  const tryFetchMore = useCallback(() => {
+    fetchMore({
+      variables: {
+        after: data.posts.pageInfo.endCursor,
+      },
+    });
+  }, [data, fetchMore]);
 
   if (error) return <p>Error : {error.message}</p>;
 
@@ -90,16 +99,40 @@ export const Posts1 = () => {
         </DropdownMenu>
       </div>
       <div className="flex flex-col gap-4">
-        {loading ? (
+        {loading && !data ? (
           <>
             <Placeholder className="h-[200px] w-full" />
             <Placeholder className="h-[200px] w-full" />
             <Placeholder className="h-[200px] w-full" />
           </>
         ) : (
-          data.posts.nodes.map(post => (
-            <PostComponent key={post.id} post={post} summaryMode />
-          ))
+          <>
+            {data.posts.nodes.map(post => (
+              <PostComponent key={post.id} post={post} summaryMode />
+            ))}
+            {data.posts.pageInfo.hasNextPage ? (
+              <div className="flex justify-center">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={tryFetchMore}
+                  disabled={loading}
+                  className={cn("w-[200px]", {
+                    "animate-pulse": loading,
+                  })}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2Icon className="h-6 w-6 me-2 animate-spin" />
+                      Loading
+                    </>
+                  ) : (
+                    "Load more posts"
+                  )}
+                </Button>
+              </div>
+            ) : null}
+          </>
         )}
       </div>
     </>
