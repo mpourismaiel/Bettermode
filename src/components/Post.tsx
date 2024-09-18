@@ -4,9 +4,9 @@ import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "./Button";
-import { Emoji } from "./Emoji";
 import { PostFollowButton } from "./PostFollowButton";
 import { PostLikeButton } from "./PostLikeButton";
+import { PostReactions } from "./PostReactions";
 import { Prose } from "./Prose";
 
 export const Post = ({
@@ -101,13 +101,7 @@ export const Post = ({
         </div>
       </div>
       <Prose prose={content} attachments={post.attachments} />
-      <div className="flex flex-wrap justify-start">
-        {reactions.map((reaction: any) => (
-          <Button variant="secondary" size="icon" key={reaction.reaction}>
-            <Emoji emoji={reaction.reaction} />
-          </Button>
-        ))}
-      </div>
+      <PostReactions reactions={reactions} postId={post.id} />
       <div className="mt-4 grid grid-cols-3 gap-4">
         <PostLikeButton post={post} updateReactions={updateReactions} />
         <PostFollowButton post={post} />
