@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Button } from "./Button";
 import { Drawer, DrawerContent, DrawerTrigger } from "./Drawer";
+import { HeaderSearch } from "./HeaderSearch";
 import { HeaderUser } from "./HeaderUser";
 
 import { GlobalContext } from "../contexts/global";
@@ -33,43 +34,35 @@ export const Header = () => {
             </Link>
           </div>
         )}
-        <div className="search">
-          <div className="flex items-center rounded-full bg-surface-3">
-            <label
-              htmlFor="search"
-              className="flex w-10 items-center justify-center border-r border-foreground-2/25 text-foreground-2"
-            >
-              <SearchIcon className="h-4 w-4" />
-            </label>
-            <input
-              type="text"
-              id="search"
-              className="w-80 bg-transparent px-4 py-2 text-foreground-1 outline-none focus:outline-none active:outline-none"
-              placeholder="Search..."
-            />
-          </div>
+        <div className="hidden lg:flex">
+          <HeaderSearch />
         </div>
         <div className="flex gap-4">
           <HeaderUser />
           <Drawer open={navigationOpen} onOpenChange={setNavigationOpen}>
             <DrawerTrigger asChild>
               <Button size="icon" className="flex lg:hidden">
-                <MenuIcon className="h-4 w-4" />
+                <MenuIcon className="h-8 w-8" />
               </Button>
             </DrawerTrigger>
             <DrawerContent>
-              {sidebarLinks.map(({ to, text, icon: Icon, target }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  target={target}
-                  className="flex items-center gap-4 p-4 text-lg"
-                  onClick={closeNavigation}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{text}</span>
-                </Link>
-              ))}
+              <div className="px-4 mt-4 mb-2">
+                <HeaderSearch />
+              </div>
+              <div className="flex flex-col gap-2">
+                {sidebarLinks.map(({ to, text, icon: Icon, target }) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    target={target}
+                    className="flex items-center gap-4 p-4 text-lg"
+                    onClick={closeNavigation}
+                  >
+                    <Icon className="h-6 w-6" />
+                    <span>{text}</span>
+                  </Link>
+                ))}
+              </div>
             </DrawerContent>
           </Drawer>
         </div>
