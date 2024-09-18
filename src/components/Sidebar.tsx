@@ -1,25 +1,16 @@
-import { BookAIcon, BookMarkedIcon, HomeIcon } from "lucide-react";
-
 import { SidebarLink } from "./SidebarLink";
+
+import { sidebarLinks } from "../utils/sidebar-links";
 
 export const Sidebar = () => {
   return (
     <aside className="flex flex-col gap-1">
-      <SidebarLink to="/">
-        <HomeIcon className="me-4 h-4 w-4" />
-        Home
-      </SidebarLink>
-      <SidebarLink to="/docs">
-        <BookMarkedIcon className="me-4 h-4 w-4" />
-        Documentation
-      </SidebarLink>
-      <SidebarLink
-        to="https://developers.bettermode.com/docs/guide/"
-        target="_blank"
-      >
-        <BookAIcon className="me-4 h-4 w-4" />
-        Api
-      </SidebarLink>
+      {sidebarLinks.map(({ to, text, icon: Icon, target }) => (
+        <SidebarLink key={to} to={to} target={target}>
+          <Icon className="me-4 h-4 w-4" />
+          {text}
+        </SidebarLink>
+      ))}
     </aside>
   );
 };
