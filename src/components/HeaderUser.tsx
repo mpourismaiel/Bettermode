@@ -1,9 +1,10 @@
-import { Loader2Icon } from "lucide-react";
+import { Loader2Icon, LogOutIcon } from "lucide-react";
 import { useContext } from "react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./Dropdown";
 import { Login } from "./Login";
@@ -11,10 +12,11 @@ import { Login } from "./Login";
 import { GlobalContext } from "../contexts/global";
 
 export const HeaderUser = () => {
-  const { user, shouldLoginPopup } = useContext(GlobalContext);
+  const { user, shouldLoginPopup, logout } = useContext(GlobalContext);
+
   return (
     <div className="flex">
-      {user ? (
+      {user && user.username !== "Guest" ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
             <img
@@ -23,7 +25,12 @@ export const HeaderUser = () => {
               alt={user.displayName || user.name}
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end"></DropdownMenuContent>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={logout}>
+              <LogOutIcon className="h-4 w-4 me-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
       ) : (
         <Login shouldPopup={shouldLoginPopup} />

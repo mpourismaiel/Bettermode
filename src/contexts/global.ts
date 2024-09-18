@@ -7,9 +7,11 @@ export const GlobalContext = createContext<{
   networkError: any;
   networkLoading: boolean;
   network: any;
+  logout: () => void;
 }>({
   user: null,
   setUser: () => {},
   shouldLoginPopup: false,
   network: null,
+  logout: () => {},
 });

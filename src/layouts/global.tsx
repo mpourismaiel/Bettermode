@@ -62,6 +62,15 @@ export const GlobalLayout = () => {
     }
   }, [fetchUser, getGuestToken, getNetwork]);
 
+  const logout = useCallback(() => {
+    localStorage.removeItem("token");
+    setHasToken(false);
+    setCheckingLogin(true);
+    setLoginPopup(false);
+    setUser(null);
+    getGuestToken();
+  }, [getGuestToken]);
+
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);
@@ -75,6 +84,7 @@ export const GlobalLayout = () => {
         networkLoading,
         networkError,
         network: networkData?.network,
+        logout,
       }}
     >
       <div className="min-h-screen bg-surface-2 pb-12 text-foreground-1">

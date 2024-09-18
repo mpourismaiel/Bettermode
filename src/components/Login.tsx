@@ -67,7 +67,6 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
           },
         });
 
-        console.log(`got token: ${response.data.loginNetwork.accessToken}`);
         localStorage.setItem("token", response.data.loginNetwork.accessToken);
         setUser(response.data.loginNetwork.member);
       } catch (error) {
