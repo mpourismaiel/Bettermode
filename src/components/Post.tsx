@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import { LockIcon, ShareIcon } from "lucide-react";
+import { LockIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "./Button";
 import { PostFollowButton } from "./PostFollowButton";
 import { PostLikeButton } from "./PostLikeButton";
 import { PostReactions } from "./PostReactions";
+import { PostShareButton } from "./PostShareButton";
 import { Prose } from "./Prose";
 
 export const Post = ({
@@ -108,10 +108,7 @@ export const Post = ({
       <div className="mt-4 grid grid-cols-3 gap-4">
         <PostLikeButton post={post} updateReactions={updateReactions} />
         <PostFollowButton post={post} />
-        <Button variant="secondary" size="default">
-          <ShareIcon className="me-2 h-4 w-4" />
-          Share
-        </Button>
+        <PostShareButton post={post} />
       </div>
     </article>
   );
