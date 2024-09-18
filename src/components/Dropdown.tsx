@@ -28,12 +28,14 @@ export const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuRadix.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuRadix.Item> & {
     inset?: boolean;
+    selected?: boolean;
   }
->(({ className, inset, ...props }, ref) => (
+>(({ className, inset, selected, ...props }, ref) => (
   <DropdownMenuRadix.Item
     ref={ref}
     className={cn(
-      "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded px-2 py-1.5 outline-none transition-colors hover:bg-surface-3 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "focus:bg-secondary focus:text-foreground-2 relative flex cursor-default select-none items-center rounded px-2 py-1.5 outline-none transition-colors hover:bg-surface-3 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      selected && "bg-secondary text-foreground-2",
       inset && "pl-8",
       className,
     )}

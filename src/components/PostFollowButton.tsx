@@ -44,7 +44,7 @@ export const PostFollowButton = ({ post }: { post: any }) => {
       className={cn({
         "animate-pulse": loading,
       })}
-      variant="secondary"
+      variant={subscribed ? "primary" : "secondary"}
       size="default"
       disabled={loading}
       onClick={toggleSubscription}

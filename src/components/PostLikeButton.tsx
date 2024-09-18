@@ -11,6 +11,7 @@ import {
 } from "./Dropdown";
 
 import POST_ADD_REACTION from "../queries/post-add-reaction.gql";
+import POST_REMOVE_REACTION from "../queries/post-remove-reaction.gql";
 
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 import { cn } from "../utils/string";
@@ -20,44 +21,77 @@ export const PostLikeButton = ({
   updateReactions,
 }: {
   post: any;
-  updateReactions: (reaction: string) => void;
+  updateReactions: (reaction: string | null) => void;
 }) => {
-  const [reaction, setReaction] = useState<string | null>(null);
+  const [optimisticReaction, setOptimisticReaction] = useState<
+    string | "removed" | null
+  >(null);
 
-  const [addReaction, { loading, error }] = useMutation(POST_ADD_REACTION);
+  const [
+    addReaction,
+    { loading: addReactionLoading, error: addReactionError },
+  ] = useMutation(POST_ADD_REACTION);
+  const [
+    removeReaction,
+    { loading: removeReactionLoading, error: removeReactError },
+  ] = useMutation(POST_REMOVE_REACTION);
+
+  const loading = useMemo(
+    () => addReactionLoading || removeReactionLoading,
+    [addReactionLoading, removeReactionLoading],
+  );
+  const error = useMemo(
+    () => addReactionError || removeReactError,
+    [addReactionError, removeReactError],
+  );
 
   const authReaction = useMemo(
-    () => reaction || post.reactions.find(({ reacted }) => reacted)?.reaction,
-    [post, reaction],
+    () =>
+      optimisticReaction ||
+      post.reactions.find(({ reacted }) => reacted)?.reaction,
+    [post, optimisticReaction],
   );
 
   const tryAddReaction = useCallback(
     (reaction: string) => async () => {
-      setReaction(reaction);
+      if (authReaction === reaction) {
+        setOptimisticReaction("removed");
+        await removeReaction({
+          variables: {
+            postId: post.id,
+            reaction,
+          },
+        });
+        updateReactions(null);
+        return;
+      }
+
+      setOptimisticReaction(reaction);
       await addReaction({
         variables: {
           postId: post.id,
-          input: { reaction: reaction, overrideSingleChoiceReactions: true },
+          input: { reaction, overrideSingleChoiceReactions: true },
         },
       });
       updateReactions(reaction);
     },
-    [addReaction, post.id, updateReactions],
+    [addReaction, removeReaction, authReaction, post.id, updateReactions],
   );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="secondary"
-          toggle={authReaction ? "active" : "default"}
+          variant={
+            authReaction && authReaction !== "removed" ? "primary" : "secondary"
+          }
           size="default"
           className={cn({
             "animate-pulse": loading,
           })}
           disabled={loading}
         >
-          {authReaction ? (
+          {authReaction && authReaction !== "removed" ? (
             <>
               {loading ? (
                 <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
@@ -68,7 +102,11 @@ export const PostLikeButton = ({
             </>
           ) : (
             <>
-              <ThumbsUpIcon className="me-2 h-4 w-4" />
+              {loading ? (
+                <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+              ) : (
+                <ThumbsUpIcon className="me-2 h-4 w-4" />
+              )}
               Like
             </>
           )}
@@ -79,6 +117,7 @@ export const PostLikeButton = ({
           <DropdownMenuItem
             key={key}
             className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl text-xl transition-all duration-200 ease-out hover:text-3xl"
+            selected={authReaction === key}
             onClick={tryAddReaction(key)}
           >
             {emojiMap[key as keyof typeof emojiMap]}

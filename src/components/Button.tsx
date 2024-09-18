@@ -12,11 +12,6 @@ const buttonVariants = cva(
         primary: "bg-primary hover:bg-primary/50 text-foreground-1",
         secondary: "bg-secondary hover:bg-secondary/50 text-foreground-1",
       },
-      toggle: {
-        default: "",
-        active: "bg-surface-3 hover:bg-surface-3",
-        inactive: "bg-surface-1 hover:bg-surface-3",
-      },
       size: {
         default: "rounded-lg px-4 py-2 text-lg",
         sm: "rounded-lg px-4 py-2 text-sm",
@@ -25,7 +20,6 @@ const buttonVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      toggle: "default",
       size: "default",
     },
   },
@@ -36,10 +30,10 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, toggle, size, ...props }, ref) => {
+  ({ className, variant, size, ...props }, ref) => {
     return (
       <button
-        className={cn(buttonVariants({ variant, toggle, size, className }))}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />

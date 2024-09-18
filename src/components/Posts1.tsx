@@ -40,7 +40,7 @@ export const Posts1 = () => {
         orderByString,
       });
     },
-    [],
+    [orderByString, refetch],
   );
 
   const tryFetchMore = useCallback(() => {
@@ -58,24 +58,24 @@ export const Posts1 = () => {
       <div className="mb-4 flex justify-end gap-4">
         <Button
           onClick={refetchPosts("publishedAt")}
-          toggle={orderByString === "publishedAt" ? "active" : "inactive"}
+          variant={orderByString === "publishedAt" ? "primary" : "secondary"}
         >
           Newest
         </Button>
         <Button
           onClick={refetchPosts("reactionsCount")}
-          toggle={orderByString === "reactionsCount" ? "active" : "inactive"}
+          variant={orderByString === "reactionsCount" ? "primary" : "secondary"}
         >
           Most Popular
         </Button>
         {!["publishedAt", "reactionsCount"].includes(orderByString) ? (
-          <Button onClick={refetchPosts("reactionsCount")} toggle="active">
+          <Button onClick={refetchPosts("reactionsCount")} variant="primary">
             {spaced(capitalize(orderByString))}
           </Button>
         ) : null}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button toggle="inactive">
+            <Button variant="secondary">
               <MoreHorizontalIcon className="h-6 w-6" />
             </Button>
           </DropdownMenuTrigger>

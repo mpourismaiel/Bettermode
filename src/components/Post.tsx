@@ -29,7 +29,7 @@ export const Post = ({
   );
 
   const updateReactions = useCallback(
-    (newReaction: string) => {
+    (newReaction: string | null) => {
       // Just a bit complicated so described here:
       // If the new reaction is already listed, add to its count. Otherwise, add a new reaction.
       // If authenticated user has already reacted, reduce the count of that reaction and remove it if the count is 0.
@@ -51,9 +51,12 @@ export const Post = ({
 
           return reaction;
         })
-        .filter(({ count }) => count > 0);
+        .filter(({ count, reaction }) => reaction && count > 0);
 
-      if (!reactions.some(({ reaction }) => reaction === newReaction)) {
+      if (
+        newReaction !== null &&
+        !reactions.some(({ reaction }) => reaction === newReaction)
+      ) {
         reactionsToSet.push({
           reaction: newReaction,
           reacted: true,
