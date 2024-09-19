@@ -29,7 +29,7 @@ export const PostShareButton = ({ post }: { post: any }) => {
       <DialogTrigger asChild>
         <Button variant="secondary" size="default">
           <ShareIcon className="me-2 h-4 w-4" />
-          Share
+          <span className="hidden sm:flex">Share</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="text-foreground-1 mt-4">

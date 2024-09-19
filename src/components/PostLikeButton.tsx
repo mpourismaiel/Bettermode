@@ -98,7 +98,9 @@ export const PostLikeButton = ({
               ) : (
                 <span className="me-2">{emojiMap[authReaction]}</span>
               )}
-              {emojiVerbsMap[authReaction as keyof typeof emojiMap]}
+              <span className="hidden sm:flex">
+                {emojiVerbsMap[authReaction as keyof typeof emojiMap]}
+              </span>
             </>
           ) : (
             <>
@@ -107,7 +109,7 @@ export const PostLikeButton = ({
               ) : (
                 <ThumbsUpIcon className="me-2 h-4 w-4" />
               )}
-              Like
+              <span className="hidden sm:flex">Like</span>
             </>
           )}
         </Button>

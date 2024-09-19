@@ -56,7 +56,7 @@ export const PostFollowButton = ({ post }: { post: any }) => {
           ) : (
             <BellRingIcon className="me-2 h-4 w-4" />
           )}
-          Followed
+          <span className="hidden sm:flex">Followed</span>
         </>
       ) : (
         <>
@@ -65,7 +65,7 @@ export const PostFollowButton = ({ post }: { post: any }) => {
           ) : (
             <BellIcon className="me-2 h-4 w-4" />
           )}
-          Follow
+          <span className="hidden sm:flex">Follow</span>
         </>
       )}
     </Button>

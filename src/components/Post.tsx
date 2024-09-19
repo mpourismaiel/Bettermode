@@ -85,7 +85,7 @@ export const Post = ({
             to={`/post/${post.slug}-${post.id}`}
             className="mb-1 text-lg font-bold"
           >
-            <h2 className="text-2xl font-bold flex items-center">
+            <h2 className="text-lg lg:text-2xl font-bold flex items-center">
               <LockIcon className="me-2 h-4 w-4" />
               {post.title}
             </h2>
