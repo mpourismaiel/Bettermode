@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 
-import { Reply as ReplyType } from "../types";
+import { Reply as ReplyType } from "../../../types";
 
 export const Reply = ({ reply }: { reply: ReplyType }) => {
   const [showMore, setShowMore] = useState(false);

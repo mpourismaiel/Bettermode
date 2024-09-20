@@ -3,22 +3,20 @@ import { useMutation } from "@apollo/client/react/hooks";
 import { Loader2Icon, SendHorizonal } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { Alert } from "./Alert";
-import { Button } from "./Button";
+import { GlobalContext } from "../contexts/global";
+import LOGIN_USER from "../queries/login-user.gql";
+import { User } from "../types";
+import { cn } from "../utils/string";
+import { Alert } from "./ui/Alert";
+import { Button } from "./ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./Dialog";
-import { Input } from "./Input";
-
-import LOGIN_USER from "../queries/login-user.gql";
-
-import { GlobalContext } from "../contexts/global";
-import { User } from "../types";
-import { cn } from "../utils/string";
+} from "./ui/Dialog";
+import { Input } from "./ui/Input";
 
 const DEFAULT_ERRORS = {
   email: "",

@@ -1,17 +1,16 @@
 import { LogOutIcon } from "lucide-react";
 import { useContext } from "react";
 
+import { GlobalContext } from "../../contexts/global";
+import { Login } from "../Login";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./Dropdown";
-import { Login } from "./Login";
+} from "../ui/Dropdown";
 
-import { GlobalContext } from "../contexts/global";
-
-export const HeaderUser = () => {
+export const User = () => {
   const { user, shouldLoginPopup, logout } = useContext(GlobalContext);
 
   return (

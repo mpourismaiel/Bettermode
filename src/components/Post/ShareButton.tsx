@@ -1,19 +1,18 @@
 import { CopyIcon, ShareIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
-import { Button } from "./Button";
+import { Post } from "../../types";
+import { Button } from "../ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-} from "./Dialog";
-import { Input } from "./Input";
+} from "../ui/Dialog";
+import { Input } from "../ui/Input";
 
-import { Post } from "../types";
-
-export const PostShareButton = ({ post }: { post: Post }) => {
+export const ShareButton = ({ post }: { post: Post }) => {
   const [open, setOpen] = useState(false);
 
   const postURL = useMemo(

@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 
-import { cn } from "../utils/string";
+import { cn } from "../../utils/string";
 
 const Input = forwardRef<
   HTMLInputElement,

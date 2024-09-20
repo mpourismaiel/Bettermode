@@ -3,14 +3,14 @@ import { LockIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { PostFollowButton } from "./PostFollowButton";
-import { PostLikeButton } from "./PostLikeButton";
-import { PostReactions } from "./PostReactions";
-import { PostShareButton } from "./PostShareButton";
+import { FollowButton } from "./FollowButton";
+import { LikeButton } from "./LikeButton";
 import { Prose } from "./Prose";
+import { Reactions } from "./Reactions";
+import { ShareButton } from "./ShareButton";
 
-import { Post as PostType } from "../types";
-import { emojiMap } from "../utils/emojies";
+import { Post as PostType } from "../../types";
+import { emojiMap } from "../../utils/emojies";
 
 export const Post = ({
   summaryMode = false,
@@ -108,11 +108,11 @@ export const Post = ({
         </div>
       </div>
       <Prose prose={content} attachments={post.attachments} />
-      <PostReactions reactions={reactions} postId={post.id} />
+      <Reactions reactions={reactions} postId={post.id} />
       <div className="mt-4 grid grid-cols-3 gap-4">
-        <PostLikeButton post={post} updateReactions={updateReactions} />
-        <PostFollowButton post={post} />
-        <PostShareButton post={post} />
+        <LikeButton post={post} updateReactions={updateReactions} />
+        <FollowButton post={post} />
+        <ShareButton post={post} />
       </div>
     </article>
   );

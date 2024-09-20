@@ -14,13 +14,6 @@ module.exports = {
   ],
   importOrder: [
     // third party modules are first, not specified due to default settings
-    // component imports
-    "/components/",
-    // same directory imports
-    "^\\./[\\w\\d]+$",
-    // asset imports
-    "\\.\\w*$",
-    // everything else
     "^[./]",
   ],
   importOrderSeparation: true,

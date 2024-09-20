@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import { cn } from "../utils/string";
+import { cn } from "../../utils/string";
 
 export const Dialog = DialogRadix.Root;
 

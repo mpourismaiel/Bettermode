@@ -1,5 +1,5 @@
-import { Posts1 } from "../components/Posts1";
+import { PostsList } from "../components/PostsList";
 
 export const App = () => {
-  return <Posts1 />;
+  return <PostsList />;
 };

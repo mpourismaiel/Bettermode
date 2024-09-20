@@ -2,13 +2,13 @@ import { Loader2Icon, MenuIcon } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "./Button";
-import { Drawer, DrawerContent, DrawerTrigger } from "./Drawer";
-import { HeaderSearch } from "./HeaderSearch";
-import { HeaderUser } from "./HeaderUser";
+import { Search } from "./Search";
+import { User } from "./User";
 
-import { NetworkContext } from "../contexts/network";
-import { sidebarLinks } from "../utils/sidebar-links";
+import { NetworkContext } from "../../contexts/network";
+import { sidebarLinks } from "../../utils/sidebar-links";
+import { Button } from "../ui/Button";
+import { Drawer, DrawerContent, DrawerTrigger } from "../ui/Drawer";
 
 export const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
@@ -35,10 +35,10 @@ export const Header = () => {
           </div>
         )}
         <div className="hidden lg:flex">
-          <HeaderSearch />
+          <Search />
         </div>
         <div className="flex gap-4">
-          <HeaderUser />
+          <User />
           <Drawer open={navigationOpen} onOpenChange={setNavigationOpen}>
             <DrawerTrigger asChild>
               <Button size="icon" className="flex lg:hidden">
@@ -47,7 +47,7 @@ export const Header = () => {
             </DrawerTrigger>
             <DrawerContent>
               <div className="px-4 mt-4 mb-2">
-                <HeaderSearch />
+                <Search />
               </div>
               <div className="flex flex-col gap-2">
                 {sidebarLinks.map(({ to, text, icon: Icon, target }) => (

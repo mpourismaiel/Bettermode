@@ -2,23 +2,23 @@ import { useQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon, MoreHorizontalIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { Button } from "./Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "./Dropdown";
-import { Placeholder } from "./Placeholder";
 import { Post as PostComponent } from "./Post";
 
 import GET_POSTS from "../queries/get-posts.gql";
 
 import { PageInfo, Post } from "../types";
 import { capitalize, cn, spaced } from "../utils/string";
+import { Button } from "./ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./ui/Dropdown";
+import { Placeholder } from "./ui/Placeholder";
 
-export const Posts1 = () => {
+export const PostsList = () => {
   const [orderByString, setorderByString] = useState<
     "publishedAt" | "reactionsCount" | "lastActivityAt" | "repliesCount"
   >("publishedAt");
@@ -27,7 +27,7 @@ export const Posts1 = () => {
     posts: { nodes: Post[]; pageInfo: PageInfo };
   }>(GET_POSTS, {
     variables: {
-      limit: 1,
+      limit: 10,
       reverse: true,
       orderByString,
     },

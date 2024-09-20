@@ -1,6 +1,5 @@
+import { sidebarLinks } from "../../utils/sidebar-links";
 import { SidebarLink } from "./SidebarLink";
-
-import { sidebarLinks } from "../utils/sidebar-links";
 
 export const Sidebar = () => {
   return (

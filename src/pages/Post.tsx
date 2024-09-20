@@ -1,10 +1,9 @@
 import { useQuery } from "@apollo/client/react/hooks";
 import { useParams } from "react-router-dom";
 
-import { Placeholder } from "../components/Placeholder";
 import { Post as PostComponent } from "../components/Post";
-import { Replies } from "../components/Replies";
-
+import { Replies } from "../components/Post/Replies";
+import { Placeholder } from "../components/ui/Placeholder";
 import GET_POST from "../queries/get-post.gql";
 
 export const Post = () => {

@@ -2,8 +2,18 @@ import { useLazyQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
 import { useCallback } from "react";
 
-import { Alert } from "./Alert";
-import { Button } from "./Button";
+import POST_REACTION_PARTICIPANTS from "../../queries/post-reaction-participants.gql";
+
+import {
+  PageInfo,
+  PostReaction,
+  PostReactionParticipantExpanded,
+} from "../../types";
+import { emojiMap, emojiVerbsMap } from "../../utils/emojies";
+import { cn } from "../../utils/string";
+import { Emoji } from "../Emoji";
+import { Alert } from "../ui/Alert";
+import { Button } from "../ui/Button";
 import {
   Dialog,
   DialogContent,
@@ -11,20 +21,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./Dialog";
-import { Emoji } from "./Emoji";
+} from "../ui/Dialog";
 
-import POST_REACTION_PARTICIPANTS from "../queries/post-reaction-participants.gql";
-
-import {
-  PageInfo,
-  PostReaction,
-  PostReactionParticipantExpanded,
-} from "../types";
-import { emojiMap, emojiVerbsMap } from "../utils/emojies";
-import { cn } from "../utils/string";
-
-export const PostReactions = ({
+export const Reactions = ({
   reactions,
   postId,
 }: {

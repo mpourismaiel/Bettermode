@@ -1,16 +1,11 @@
 import { DownloadIcon, EyeIcon } from "lucide-react";
 import { useCallback } from "react";
 
-import { Button } from "./Button";
+import { PostAttachment } from "../../../types";
+import { humanReadableSize } from "../../../utils/number";
+import { Button } from "../../ui/Button";
 
-import { PostAttachment } from "../types";
-import { humanReadableSize } from "../utils/number";
-
-export const ProseAttachment = ({
-  attachment,
-}: {
-  attachment: PostAttachment;
-}) => {
+export const Attachment = ({ attachment }: { attachment: PostAttachment }) => {
   const previewAttachment = useCallback(
     (attachment: PostAttachment) => () => {
       // TODO: Implement preview

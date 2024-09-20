@@ -1,6 +1,6 @@
 import { SearchIcon } from "lucide-react";
 
-export const HeaderSearch = () => {
+export const Search = () => {
   return (
     <div className="flex items-center rounded-full bg-surface-3">
       <label

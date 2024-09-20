@@ -4,9 +4,8 @@ import { ApolloProvider } from "@apollo/client/react/context";
 import React from "react";
 import { StaticRouter } from "react-router-dom/server";
 
-import { Root } from "./main";
-
 import { AuthContext } from "./contexts/auth";
+import { Root } from "./main";
 
 export function render({
   path,

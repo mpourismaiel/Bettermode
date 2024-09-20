@@ -1,6 +1,6 @@
 import { NavLink, NavLinkProps } from "react-router-dom";
 
-import { cn } from "../utils/string";
+import { cn } from "../../utils/string";
 
 export const SidebarLink = ({ className, ...props }: NavLinkProps) => {
   return (

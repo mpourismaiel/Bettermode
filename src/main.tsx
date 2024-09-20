@@ -3,7 +3,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Route, Routes } from "react-router-dom";
 
 import "./index.css";
-
 import { GlobalLayout } from "./layouts/global";
 import { App } from "./pages/App";
 import { Docs } from "./pages/Docs";

@@ -1,11 +1,10 @@
 import { SendHorizonalIcon } from "lucide-react";
 import { useContext } from "react";
 
-import { Button } from "./Button";
+import { GlobalContext } from "../../../contexts/global";
+import { Button } from "../../ui/Button";
 
-import { GlobalContext } from "../contexts/global";
-
-export const ReplyCompose = ({ postId }: { postId: string }) => {
+export const Compose = ({ postId }: { postId: string }) => {
   const { user } = useContext(GlobalContext);
 
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-import { ProseAttachment } from "./ProseAttachment";
+import { Attachment } from "./Attachment";
 
-import { PostAttachment } from "../types";
+import { PostAttachment } from "../../../types";
 
 export const Prose = ({
   prose,
@@ -47,7 +47,7 @@ export const Prose = ({
       {usedAttachments.length > 0 ? (
         <div className="mb-8 flex flex-col gap-2">
           {usedAttachments.map(attachment => (
-            <ProseAttachment key={attachment.id} attachment={attachment} />
+            <Attachment key={attachment.id} attachment={attachment} />
           ))}
         </div>
       ) : null}

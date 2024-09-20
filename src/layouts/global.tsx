@@ -3,9 +3,9 @@ import { Loader2Icon } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import { Alert } from "../components/Alert";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
+import { Alert } from "../components/ui/Alert";
 
 import LOGIN_CHECK from "../queries/login-check.gql";
 import LOGIN_GUEST from "../queries/login-guest.gql";
@@ -13,11 +13,12 @@ import LOGIN_GUEST from "../queries/login-guest.gql";
 import { AuthContext } from "../contexts/auth";
 import { GlobalContext } from "../contexts/global";
 import { Network } from "../contexts/network";
+import { User } from "../types";
 
 export const GlobalLayout = () => {
   const { token } = useContext(AuthContext);
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [checkingLogin, setCheckingLogin] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
 

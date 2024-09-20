@@ -2,22 +2,21 @@ import { useMutation } from "@apollo/client/react/hooks";
 import { Loader2Icon, ThumbsUpIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
-import { Button } from "./Button";
+import POST_ADD_REACTION from "../../queries/post-add-reaction.gql";
+import POST_REMOVE_REACTION from "../../queries/post-remove-reaction.gql";
+
+import { Post } from "../../types";
+import { emojiMap, emojiVerbsMap } from "../../utils/emojies";
+import { cn } from "../../utils/string";
+import { Button } from "../ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./Dropdown";
+} from "../ui/Dropdown";
 
-import POST_ADD_REACTION from "../queries/post-add-reaction.gql";
-import POST_REMOVE_REACTION from "../queries/post-remove-reaction.gql";
-
-import { Post } from "../types";
-import { emojiMap, emojiVerbsMap } from "../utils/emojies";
-import { cn } from "../utils/string";
-
-export const PostLikeButton = ({
+export const LikeButton = ({
   post,
   updateReactions,
 }: {

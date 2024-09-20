@@ -1,4 +1,4 @@
-import { cn } from "../utils/string";
+import { cn } from "../../utils/string";
 
 export const Placeholder = ({ className }: { className?: string }) => {
   return (
