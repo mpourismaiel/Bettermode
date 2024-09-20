@@ -1,12 +1,21 @@
 import { SendHorizonalIcon } from "lucide-react";
+import { useContext } from "react";
 
 import { Button } from "./Button";
 
+import { GlobalContext } from "../contexts/global";
+
 export const ReplyCompose = ({ postId }: { postId: string }) => {
+  const { user } = useContext(GlobalContext);
+
   return (
     <div className="flex gap-6">
       <img
-        src="https://source.unsplash.com/random/100x100"
+        src={
+          !user || user.username === "Guest"
+            ? "/assets/vite.svg"
+            : user.profilePicture.url
+        }
         alt="User"
         className="mt-2 h-16 w-16 rounded-full"
       />

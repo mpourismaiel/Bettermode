@@ -1,4 +1,5 @@
-import { ApolloError, useMutation } from "@apollo/client";
+import { ApolloError } from "@apollo/client/errors";
+import { useMutation } from "@apollo/client/react/hooks";
 import { Loader2Icon, SendHorizonal } from "lucide-react";
 import { useCallback, useContext, useEffect, useState } from "react";
 
@@ -67,7 +68,7 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
           },
         });
 
-        localStorage.setItem("token", response.data.loginNetwork.accessToken);
+        document.cookie = `bettermode_access_token=${response.data.loginNetwork.accessToken}; path=/; max-age=3600; samesite=strict; secure`;
         setUser(response.data.loginNetwork.member);
       } catch (error) {
         return setErrors({

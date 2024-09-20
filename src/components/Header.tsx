@@ -1,4 +1,4 @@
-import { Loader2Icon, MenuIcon, SearchIcon } from "lucide-react";
+import { Loader2Icon, MenuIcon } from "lucide-react";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -7,20 +7,20 @@ import { Drawer, DrawerContent, DrawerTrigger } from "./Drawer";
 import { HeaderSearch } from "./HeaderSearch";
 import { HeaderUser } from "./HeaderUser";
 
-import { GlobalContext } from "../contexts/global";
+import { NetworkContext } from "../contexts/network";
 import { sidebarLinks } from "../utils/sidebar-links";
 
 export const Header = () => {
   const [navigationOpen, setNavigationOpen] = useState(false);
 
-  const { network, networkLoading } = useContext(GlobalContext);
+  const { network, networkLoading } = useContext(NetworkContext);
 
   const closeNavigation = () => setNavigationOpen(false);
 
   return (
     <header className="custom-container-wrapper bg-surface-1">
       <nav className="custom-container flex items-center justify-between py-4">
-        {networkLoading ? (
+        {networkLoading || !network ? (
           <Loader2Icon className="animate-spin h-10 w-10" />
         ) : (
           <div>

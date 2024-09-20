@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react/hooks";
 import { useParams } from "react-router-dom";
 
 import { Placeholder } from "../components/Placeholder";

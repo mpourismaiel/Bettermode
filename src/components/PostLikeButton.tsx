@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react/hooks";
 import { Loader2Icon, ThumbsUpIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 

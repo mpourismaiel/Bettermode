@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
 import { useCallback } from "react";
 

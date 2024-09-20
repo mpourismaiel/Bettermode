@@ -1,6 +1,6 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import { Alert } from "./Alert";
 import { Button } from "./Button";

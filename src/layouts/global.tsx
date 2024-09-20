@@ -1,47 +1,40 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Alert } from "../components/Alert";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 
-import GET_NETWORK from "../queries/get-network.gql";
 import LOGIN_CHECK from "../queries/login-check.gql";
 import LOGIN_GUEST from "../queries/login-guest.gql";
 
+import { AuthContext } from "../contexts/auth";
 import { GlobalContext } from "../contexts/global";
+import { Network } from "../contexts/network";
 
 export const GlobalLayout = () => {
+  const { token } = useContext(AuthContext);
+
   const [user, setUser] = useState(null);
-  const [checkingLogin, setCheckingLogin] = useState(true);
-  const [hasToken, setHasToken] = useState(false);
+  const [checkingLogin, setCheckingLogin] = useState(false);
   const [loginPopup, setLoginPopup] = useState(false);
 
   const [loginGuest, { error: loginGuestError }] = useLazyQuery(LOGIN_GUEST);
   const [fetchUser] = useLazyQuery(LOGIN_CHECK);
-  const [
-    fetchNetwork,
-    { data: networkData, loading: networkLoading, error: networkError },
-  ] = useLazyQuery(GET_NETWORK);
-
-  const getNetwork = useCallback(async () => {
-    fetchNetwork();
-  }, [fetchNetwork]);
 
   const getGuestToken = useCallback(async () => {
+    setCheckingLogin(true);
     const response = await loginGuest({
       variables: { networkDomain: import.meta.env.VITE_NETWORK_DOMAIN },
     });
-    localStorage.setItem("token", response.data.tokens.accessToken);
-    getNetwork();
-    setHasToken(true);
+    document.cookie = `bettermode_access_token=${response.data.tokens.accessToken}; path=/; max-age=3600; samesite=strict; secure`;
+
     setCheckingLogin(false);
-  }, [loginGuest, getNetwork]);
+  }, [loginGuest]);
 
   const checkLogin = useCallback(async () => {
-    const token = localStorage.getItem("token");
     if (!token) {
       getGuestToken();
       return;
@@ -50,23 +43,17 @@ export const GlobalLayout = () => {
     try {
       const response = await fetchUser();
       setUser(response.data.authMember);
-      getNetwork();
-
-      setHasToken(true);
-      setCheckingLogin(false);
     } catch (error) {
       // TODO: Show login modal? we already know user used to be logged in
       console.error("Error checking login", error);
       setLoginPopup(true);
       getGuestToken();
     }
-  }, [fetchUser, getGuestToken, getNetwork]);
+  }, [fetchUser, getGuestToken, token]);
 
   const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    setHasToken(false);
+    document.cookie = "bettermode_access_token=; path=/; max-age=0";
     setCheckingLogin(true);
-    setLoginPopup(false);
     setUser(null);
     getGuestToken();
   }, [getGuestToken]);
@@ -81,18 +68,15 @@ export const GlobalLayout = () => {
         user,
         setUser,
         shouldLoginPopup: loginPopup,
-        networkLoading,
-        networkError,
-        network: networkData?.network,
         logout,
       }}
     >
       <div className="min-h-screen bg-surface-2 pb-12 text-foreground-1">
-        {checkingLogin || loginGuestError || !hasToken ? (
+        {checkingLogin || loginGuestError ? (
           <div className="flex h-screen w-screen items-center justify-center">
             {checkingLogin ? (
               <Loader2Icon className="h-12 w-12 animate-spin" />
-            ) : loginGuestError || !hasToken ? (
+            ) : loginGuestError ? (
               <Alert>
                 {loginGuestError
                   ? `Error: ${loginGuestError?.message || "Something went wrong!"}`
@@ -101,7 +85,7 @@ export const GlobalLayout = () => {
             ) : null}
           </div>
         ) : (
-          <>
+          <Network>
             <Header />
             <div className="custom-container-wrapper">
               <div className="custom-container mt-4 grid grid-cols-12 gap-6 lg:mt-8">
@@ -113,7 +97,7 @@ export const GlobalLayout = () => {
                 </div>
               </div>
             </div>
-          </>
+          </Network>
         )}
       </div>
     </GlobalContext.Provider>
