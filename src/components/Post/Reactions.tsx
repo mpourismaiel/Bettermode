@@ -3,7 +3,6 @@ import { Loader2Icon } from "lucide-react";
 import { useCallback } from "react";
 
 import POST_REACTION_PARTICIPANTS from "../../queries/post-reaction-participants.gql";
-
 import {
   PageInfo,
   PostReaction,
@@ -85,7 +84,16 @@ export const Reactions = ({
               <div className="flex justify-center items-center mt-4">
                 <Loader2Icon className="h-8 w-8 animate-spin" />
               </div>
-            ) : data ? (
+            ) : error ? (
+              <Alert>
+                <h5 className="font-bold mb-2">
+                  Something went wrong while fetching participants.
+                </h5>
+                <p>{error.message}</p>
+              </Alert>
+            ) : !data ? (
+              <p>No one reacted with this emoji yet.</p>
+            ) : (
               <div className="flex flex-col mt-4">
                 {data.postReactionParticipants.nodes.length ? (
                   <>
@@ -133,7 +141,7 @@ export const Reactions = ({
                   <Alert>No one reacted with this emoji yet.</Alert>
                 )}
               </div>
-            ) : null}
+            )}
           </DialogContent>
         </Dialog>
       ))}

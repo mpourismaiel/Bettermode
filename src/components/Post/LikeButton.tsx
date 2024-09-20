@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client/react/hooks";
 import { Loader2Icon, ThumbsUpIcon } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import POST_ADD_REACTION from "../../queries/post-add-reaction.gql";
 import POST_REMOVE_REACTION from "../../queries/post-remove-reaction.gql";
-
 import { Post } from "../../types";
 import { emojiMap, emojiVerbsMap } from "../../utils/emojies";
 import { cn } from "../../utils/string";
@@ -40,10 +40,23 @@ export const LikeButton = ({
     () => addReactionLoading || removeReactionLoading,
     [addReactionLoading, removeReactionLoading],
   );
+
   const error = useMemo(
     () => addReactionError || removeReactError,
     [addReactionError, removeReactError],
   );
+
+  useEffect(() => {
+    if (error) {
+      toast("Something went wrong!", {
+        description: error.message,
+        action: {
+          label: "Dismiss",
+          onClick: () => {},
+        },
+      });
+    }
+  }, [error]);
 
   const authReaction = useMemo<keyof typeof emojiMap | "removed" | undefined>(
     () =>

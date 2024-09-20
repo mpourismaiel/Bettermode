@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
+import { Toaster } from "./components/ui/Sonner";
 import { AuthContext } from "./contexts/auth";
 import { Root } from "./main";
 import { client } from "./utils/apollo";
@@ -23,6 +24,7 @@ ReactDOM.hydrateRoot(
         <BrowserRouter>
           <Root />
         </BrowserRouter>
+        <Toaster />
       </AuthContext.Provider>
     </ApolloProvider>
   </React.StrictMode>,

@@ -4,6 +4,7 @@ import { ApolloProvider } from "@apollo/client/react/context";
 import React from "react";
 import { StaticRouter } from "react-router-dom/server";
 
+import { Toaster } from "./components/ui/Sonner";
 import { AuthContext } from "./contexts/auth";
 import { Root } from "./main";
 
@@ -23,6 +24,7 @@ export function render({
           <StaticRouter location={path}>
             <Root />
           </StaticRouter>
+          <Toaster />
         </AuthContext.Provider>
       </ApolloProvider>
     </React.StrictMode>

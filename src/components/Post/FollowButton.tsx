@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client/react/hooks";
 import { BellIcon, BellRingIcon, Loader2Icon } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import POST_SUBSCRIBE from "../../queries/post-subscribe.gql";
 import POST_UNSUBSCRIBE from "../../queries/post-unsubscribe.gql";
-
 import { Post } from "../../types";
 import { cn } from "../../utils/string";
 import { Button } from "../ui/Button";
@@ -28,6 +28,18 @@ export const FollowButton = ({ post }: { post: Post }) => {
     () => subscribeError || unsubscribeError,
     [subscribeError, unsubscribeError],
   );
+
+  useEffect(() => {
+    if (error) {
+      toast("Something went wrong!", {
+        description: error.message,
+        action: {
+          label: "Dismiss",
+          onClick: () => {},
+        },
+      });
+    }
+  }, [error]);
 
   const toggleSubscription = useCallback(async () => {
     if (subscribed) {
