@@ -17,6 +17,7 @@ import { Input } from "./Input";
 import LOGIN_USER from "../queries/login-user.gql";
 
 import { GlobalContext } from "../contexts/global";
+import { User } from "../types";
 import { cn } from "../utils/string";
 
 const DEFAULT_ERRORS = {
@@ -33,7 +34,16 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ ...DEFAULT_ERRORS });
 
-  const [login, { loading, reset }] = useMutation(LOGIN_USER);
+  const [login, { loading, reset }] = useMutation<{
+    loginNetwork: {
+      accessToken: string;
+      role: {
+        name: string;
+        scopes: string[];
+      };
+      member: User;
+    };
+  }>(LOGIN_USER);
 
   const validateForm = useCallback(() => {
     const errorsToSet = { ...DEFAULT_ERRORS };
@@ -67,6 +77,13 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
             password,
           },
         });
+
+        if (!response.data?.loginNetwork) {
+          return setErrors({
+            ...DEFAULT_ERRORS,
+            form: "Invalid email or password",
+          });
+        }
 
         document.cookie = `bettermode_access_token=${response.data.loginNetwork.accessToken}; path=/; max-age=3600; samesite=strict; secure`;
         setUser(response.data.loginNetwork.member);

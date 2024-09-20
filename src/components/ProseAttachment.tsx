@@ -3,11 +3,16 @@ import { useCallback } from "react";
 
 import { Button } from "./Button";
 
+import { PostAttachment } from "../types";
 import { humanReadableSize } from "../utils/number";
 
-export const ProseAttachment = ({ attachment }: { attachment: any }) => {
+export const ProseAttachment = ({
+  attachment,
+}: {
+  attachment: PostAttachment;
+}) => {
   const previewAttachment = useCallback(
-    (attachment: any) => () => {
+    (attachment: PostAttachment) => () => {
       // TODO: Implement preview
       console.log(attachment);
     },
@@ -15,7 +20,7 @@ export const ProseAttachment = ({ attachment }: { attachment: any }) => {
   );
 
   const downloadAttachment = useCallback(
-    (attachment: any) => () => {
+    (attachment: PostAttachment) => () => {
       // TODO: Implement download
       console.log(attachment);
     },

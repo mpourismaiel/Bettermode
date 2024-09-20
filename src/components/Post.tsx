@@ -9,12 +9,15 @@ import { PostReactions } from "./PostReactions";
 import { PostShareButton } from "./PostShareButton";
 import { Prose } from "./Prose";
 
+import { Post as PostType } from "../types";
+import { emojiMap } from "../utils/emojies";
+
 export const Post = ({
   summaryMode = false,
   post,
 }: {
   summaryMode?: boolean;
-  post: any;
+  post: PostType;
 }) => {
   const [reactions, setReactions] = useState(post.reactions);
 
@@ -23,13 +26,14 @@ export const Post = ({
       summaryMode
         ? post.shortContent
         : JSON.parse(
-            post.mappingFields.find(({ key }) => key === "content")?.value,
+            post.mappingFields.find(({ key }) => key === "content")
+              ?.value as string,
           ) || "",
     [post, summaryMode],
   );
 
   const updateReactions = useCallback(
-    (newReaction: string | null) => {
+    (newReaction: keyof typeof emojiMap | null) => {
       // Just a bit complicated so described here:
       // If the new reaction is already listed, add to its count. Otherwise, add a new reaction.
       // If authenticated user has already reacted, reduce the count of that reaction and remove it if the count is 0.

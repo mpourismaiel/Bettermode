@@ -2,15 +2,17 @@ import { useEffect, useRef, useState } from "react";
 
 import { ProseAttachment } from "./ProseAttachment";
 
+import { PostAttachment } from "../types";
+
 export const Prose = ({
   prose,
   attachments,
 }: {
   prose: string;
-  attachments: any[];
+  attachments: PostAttachment[];
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [usedAttachments, setUsedAttachments] = useState<any[]>([]);
+  const [usedAttachments, setUsedAttachments] = useState<PostAttachment[]>([]);
 
   useEffect(() => {
     if (ref.current) {
@@ -30,7 +32,7 @@ export const Prose = ({
               ({ id: attachmentId }) => attachmentId === id,
             );
           })
-          .filter(Boolean),
+          .filter<PostAttachment>(attachment => !!attachment),
       );
     }
   }, [prose, attachments]);

@@ -15,6 +15,7 @@ import { Post as PostComponent } from "./Post";
 
 import GET_POSTS from "../queries/get-posts.gql";
 
+import { PageInfo, Post } from "../types";
 import { capitalize, cn, spaced } from "../utils/string";
 
 export const Posts1 = () => {
@@ -22,9 +23,11 @@ export const Posts1 = () => {
     "publishedAt" | "reactionsCount" | "lastActivityAt" | "repliesCount"
   >("publishedAt");
 
-  const { loading, error, data, refetch, fetchMore } = useQuery(GET_POSTS, {
+  const { loading, error, data, refetch, fetchMore } = useQuery<{
+    posts: { nodes: Post[]; pageInfo: PageInfo };
+  }>(GET_POSTS, {
     variables: {
-      limit: 10,
+      limit: 1,
       reverse: true,
       orderByString,
     },
@@ -46,7 +49,7 @@ export const Posts1 = () => {
   const tryFetchMore = useCallback(() => {
     fetchMore({
       variables: {
-        after: data.posts.pageInfo.endCursor,
+        after: data?.posts.pageInfo.endCursor,
       },
     });
   }, [data, fetchMore]);
@@ -105,6 +108,8 @@ export const Posts1 = () => {
             <Placeholder className="h-[200px] w-full" />
             <Placeholder className="h-[200px] w-full" />
           </>
+        ) : !data ? (
+          <p>No posts found</p>
         ) : (
           <>
             {data.posts.nodes.map(post => (

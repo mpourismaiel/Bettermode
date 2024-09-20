@@ -11,7 +11,9 @@ import {
 } from "./Dialog";
 import { Input } from "./Input";
 
-export const PostShareButton = ({ post }: { post: any }) => {
+import { Post } from "../types";
+
+export const PostShareButton = ({ post }: { post: Post }) => {
   const [open, setOpen] = useState(false);
 
   const postURL = useMemo(

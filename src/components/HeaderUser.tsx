@@ -1,4 +1,4 @@
-import { Loader2Icon, LogOutIcon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import { useContext } from "react";
 
 import {

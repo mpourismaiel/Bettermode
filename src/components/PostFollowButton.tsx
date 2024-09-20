@@ -7,9 +7,10 @@ import { Button } from "./Button";
 import POST_SUBSCRIBE from "../queries/post-subscribe.gql";
 import POST_UNSUBSCRIBE from "../queries/post-unsubscribe.gql";
 
+import { Post } from "../types";
 import { cn } from "../utils/string";
 
-export const PostFollowButton = ({ post }: { post: any }) => {
+export const PostFollowButton = ({ post }: { post: Post }) => {
   const [subscribed, setSubscribed] = useState(post.authMemberProps.subscribed);
 
   const [subscribe, { loading: subscribeLoading, error: subscribeError }] =

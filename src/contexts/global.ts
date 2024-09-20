@@ -1,8 +1,10 @@
 import { createContext } from "react";
 
+import { User } from "../types";
+
 export const GlobalContext = createContext<{
-  user: any;
-  setUser: (user: any) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
   shouldLoginPopup: boolean;
   logout: () => void;
 }>({

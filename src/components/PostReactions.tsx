@@ -16,6 +16,11 @@ import { Emoji } from "./Emoji";
 
 import POST_REACTION_PARTICIPANTS from "../queries/post-reaction-participants.gql";
 
+import {
+  PageInfo,
+  PostReaction,
+  PostReactionParticipantExpanded,
+} from "../types";
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 import { cn } from "../utils/string";
 
@@ -23,15 +28,17 @@ export const PostReactions = ({
   reactions,
   postId,
 }: {
-  reactions: any[];
+  reactions: PostReaction[];
   postId: string;
 }) => {
-  const [fetchParticipations, { data, loading, error }] = useLazyQuery(
-    POST_REACTION_PARTICIPANTS,
-    {
-      notifyOnNetworkStatusChange: true,
-    },
-  );
+  const [fetchParticipations, { data, loading, error }] = useLazyQuery<{
+    postReactionParticipants: {
+      nodes: { participant: PostReactionParticipantExpanded }[];
+      pageInfo: PageInfo;
+    };
+  }>(POST_REACTION_PARTICIPANTS, {
+    notifyOnNetworkStatusChange: true,
+  });
 
   const tryOpenReaction = useCallback(
     (reaction: string) => () => {
@@ -43,14 +50,14 @@ export const PostReactions = ({
   const fetchMore = useCallback(() => {
     fetchParticipations({
       variables: {
-        cursor: data.postReactionParticipants.pageInfo.endCursor,
+        cursor: data?.postReactionParticipants.pageInfo.endCursor,
       },
     });
   }, [data, fetchParticipations]);
 
   return (
     <div className="flex flex-wrap justify-start">
-      {reactions.map((reaction: any) => (
+      {reactions.map((reaction: PostReaction) => (
         <Dialog key={reaction.reaction}>
           <DialogTrigger asChild>
             <Button
@@ -84,7 +91,7 @@ export const PostReactions = ({
                 {data.postReactionParticipants.nodes.length ? (
                   <>
                     {data.postReactionParticipants.nodes.map(
-                      ({ participant }: { participant: any }) => (
+                      ({ participant }) => (
                         <div
                           key={participant.id}
                           className="flex items-center gap-2"

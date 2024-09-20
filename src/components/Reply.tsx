@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { useCallback, useState } from "react";
 
-export const Reply = ({ reply }: { reply: any }) => {
+import { Reply as ReplyType } from "../types";
+
+export const Reply = ({ reply }: { reply: ReplyType }) => {
   const [showMore, setShowMore] = useState(false);
 
   const showFullReply = useCallback(() => {
@@ -51,7 +53,7 @@ export const Reply = ({ reply }: { reply: any }) => {
               __html:
                 JSON.parse(
                   reply.mappingFields.find(({ key }) => key === "content")
-                    ?.value,
+                    ?.value as string,
                 ) || "",
             }}
           />

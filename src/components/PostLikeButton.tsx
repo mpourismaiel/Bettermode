@@ -13,6 +13,7 @@ import {
 import POST_ADD_REACTION from "../queries/post-add-reaction.gql";
 import POST_REMOVE_REACTION from "../queries/post-remove-reaction.gql";
 
+import { Post } from "../types";
 import { emojiMap, emojiVerbsMap } from "../utils/emojies";
 import { cn } from "../utils/string";
 
@@ -20,11 +21,11 @@ export const PostLikeButton = ({
   post,
   updateReactions,
 }: {
-  post: any;
-  updateReactions: (reaction: string | null) => void;
+  post: Post;
+  updateReactions: (reaction: keyof typeof emojiMap | null) => void;
 }) => {
   const [optimisticReaction, setOptimisticReaction] = useState<
-    string | "removed" | null
+    keyof typeof emojiMap | "removed" | null
   >(null);
 
   const [
@@ -45,7 +46,7 @@ export const PostLikeButton = ({
     [addReactionError, removeReactError],
   );
 
-  const authReaction = useMemo(
+  const authReaction = useMemo<keyof typeof emojiMap | "removed" | undefined>(
     () =>
       optimisticReaction ||
       post.reactions.find(({ reacted }) => reacted)?.reaction,
@@ -53,7 +54,7 @@ export const PostLikeButton = ({
   );
 
   const tryAddReaction = useCallback(
-    (reaction: string) => async () => {
+    (reaction: keyof typeof emojiMap) => async () => {
       if (authReaction === reaction) {
         setOptimisticReaction("removed");
         await removeReaction({
@@ -78,6 +79,39 @@ export const PostLikeButton = ({
     [addReaction, removeReaction, authReaction, post.id, updateReactions],
   );
 
+  if (!post.authMemberProps.canReact) {
+    return (
+      <Button
+        variant={
+          authReaction && authReaction !== "removed" ? "primary" : "secondary"
+        }
+        size="default"
+        disabled
+      >
+        {authReaction && authReaction !== "removed" ? (
+          <>
+            {loading ? (
+              <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+            ) : (
+              <span className="me-2">{emojiMap[authReaction]}</span>
+            )}
+            <span className="hidden sm:flex">
+              {emojiVerbsMap[authReaction as keyof typeof emojiMap]}
+            </span>
+          </>
+        ) : (
+          <>
+            {loading ? (
+              <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+            ) : (
+              <ThumbsUpIcon className="me-2 h-4 w-4" />
+            )}
+            <span className="hidden sm:flex">Like</span>
+          </>
+        )}
+      </Button>
+    );
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -120,7 +154,7 @@ export const PostLikeButton = ({
             key={key}
             className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl text-xl transition-all duration-200 ease-out hover:text-3xl"
             selected={authReaction === key}
-            onClick={tryAddReaction(key)}
+            onClick={tryAddReaction(key as keyof typeof emojiMap)}
           >
             {emojiMap[key as keyof typeof emojiMap]}
           </DropdownMenuItem>

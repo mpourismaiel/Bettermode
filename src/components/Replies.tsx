@@ -9,10 +9,16 @@ import { ReplyCompose } from "./ReplyCompose";
 
 import GET_REPLIES from "../queries/post-replies.gql";
 
+import { PageInfo, Reply as ReplyType } from "../types";
 import { cn } from "../utils/string";
 
 export const Replies = ({ postId }: { postId: string }) => {
-  const { data, loading, error, fetchMore } = useQuery(GET_REPLIES, {
+  const { data, loading, error, fetchMore } = useQuery<{
+    replies: {
+      nodes: ReplyType[];
+      pageInfo: PageInfo;
+    };
+  }>(GET_REPLIES, {
     variables: {
       reverse: true,
       orderBy: "publishedAt",
@@ -25,7 +31,7 @@ export const Replies = ({ postId }: { postId: string }) => {
   const tryFetchMore = useCallback(() => {
     fetchMore({
       variables: {
-        after: data.replies.pageInfo.endCursor,
+        after: data?.replies.pageInfo.endCursor,
       },
     });
   }, [data, fetchMore]);
@@ -37,9 +43,11 @@ export const Replies = ({ postId }: { postId: string }) => {
       <ReplyCompose postId={postId} />
       {loading && !data ? (
         <Placeholder className="h-[150px] w-full" />
+      ) : !data ? (
+        <p>No replies yet</p>
       ) : (
         <>
-          {data.replies.nodes.map((reply: any) => (
+          {data.replies.nodes.map(reply => (
             <Reply key={reply.id} reply={reply} />
           ))}
           {data.replies.pageInfo.hasNextPage ? (
