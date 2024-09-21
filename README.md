@@ -1,6 +1,6 @@
 # Bettermode challenge project
 
-The project was made in response to the [challenge proposed](https://bettermode.notion.site/Senior-Front-End-Engineer-485a0725e4d940c3a01fafe2b5154598) by Bettermode for the Senior Front-end Engineer position.
+The project was made in response to the [challenge](https://bettermode.notion.site/Senior-Front-End-Engineer-485a0725e4d940c3a01fafe2b5154598) proposed by Bettermode for the Senior Front-end Engineer position.
 
 Objectives of the challenge are as listed below:
 

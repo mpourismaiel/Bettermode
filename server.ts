@@ -45,6 +45,8 @@ if (!isProduction) {
 
 app.use("/assets", express.static("./src/assets"));
 
+app.use("/readme", express.static("./README.md"));
+
 // Serve HTML
 app.use("*", async (req, res) => {
   try {
