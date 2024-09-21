@@ -42,6 +42,14 @@ npm run server
 
 Visit [http://localhost:5173](http://localhost:5173) to view the project.
 
+## Project structure
+
+Project structure somewhat follows the previous Nextjs structure, where pages are stored in `/src/pages` and components are categorically stored in `/src/components`. The `/src/contexts` directory contains the context definitions and components used in the project.
+
+The `/src/graphql` directory contains the graphql queries and mutations used in the project. You will notice queries are not defined per Apollo documentation and the reason is easier syntax highlighting. The queries are copied from the network requests made in the actual website created in Bettermode.
+
+Tests, where available, are next to the component they are testing, named as `*.test.tsx`.
+
 ## Inspirations
 
 This project was made using Vite, React, Tailwindcss, Apollo. Some components are developed or copied from Shadcn. The SSR functionality is developed combining code from documentation of Vite and Apollo.

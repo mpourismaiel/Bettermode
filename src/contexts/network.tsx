@@ -15,7 +15,11 @@ export const NetworkContext = createContext<{
   network: null,
 });
 
-export const Network = ({ children }: { children: React.ReactNode }) => {
+export const NetworkProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { data, loading, error } = useQuery(GET_NETWORK);
 
   return (

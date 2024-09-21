@@ -1,21 +1,31 @@
 import { useLazyQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
+import { createContext } from "react";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Alert } from "../components/ui/Alert";
-
 import LOGIN_CHECK from "../queries/login-check.gql";
 import LOGIN_GUEST from "../queries/login-guest.gql";
-
-import { AuthContext } from "../contexts/auth";
-import { GlobalContext } from "../contexts/global";
-import { Network } from "../contexts/network";
 import { User } from "../types";
+import { AuthContext } from "./auth";
+import { NetworkProvider } from "./network";
 
-export const GlobalLayout = () => {
+export const GlobalContext = createContext<{
+  user: User | null;
+  setUser: (user: User | null) => void;
+  shouldLoginPopup: boolean;
+  logout: () => void;
+}>({
+  user: null,
+  setUser: () => {},
+  shouldLoginPopup: false,
+  logout: () => {},
+});
+
+export const GlobalProvider = () => {
   const { token } = useContext(AuthContext);
 
   const [user, setUser] = useState<User | null>(null);
@@ -86,7 +96,7 @@ export const GlobalLayout = () => {
             ) : null}
           </div>
         ) : (
-          <Network>
+          <NetworkProvider>
             <Header />
             <div className="custom-container-wrapper">
               <div className="custom-container mt-4 grid grid-cols-12 gap-6 lg:mt-8">
@@ -98,7 +108,7 @@ export const GlobalLayout = () => {
                 </div>
               </div>
             </div>
-          </Network>
+          </NetworkProvider>
         )}
       </div>
     </GlobalContext.Provider>
