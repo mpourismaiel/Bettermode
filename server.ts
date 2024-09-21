@@ -3,14 +3,17 @@ import { ApolloClient } from "@apollo/client/core";
 import { createHttpLink } from "@apollo/client/link/http";
 import { renderToStringWithData } from "@apollo/client/react/ssr";
 import cookieParser from "cookie-parser";
-import express from "express";
+import express, { RequestHandler } from "express";
 import fs from "node:fs/promises";
+import { loadEnv } from "vite";
 
 import { typePolicies } from "./src/utils/apollo-type-policies";
 
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
+const env = loadEnv(isProduction ? "prod" : "dev", "");
+const LOGIN_GUEST = await fs.readFile("./src/queries/login-guest.gql", "utf-8");
 
 // Cached production assets
 const templateHtml = isProduction
@@ -22,7 +25,7 @@ const ssrManifest = isProduction
 
 // Create http server
 const app = express();
-app.use(cookieParser());
+app.use(cookieParser() as RequestHandler);
 
 // Add Vite or respective production middlewares
 let vite;
@@ -36,7 +39,7 @@ if (!isProduction) {
 } else {
   const compression = (await import("compression")).default;
   const sirv = (await import("sirv")).default;
-  app.use(compression());
+  app.use(compression() as RequestHandler);
   app.use("/", sirv("./dist/client", { extensions: [] }));
 }
 
@@ -56,7 +59,35 @@ app.use("*", async (req, res) => {
       render = (await import("./dist/server/entry-server.js")).render;
     }
 
-    const token = req.cookies?.bettermode_access_token ?? "";
+    let token = req.cookies?.bettermode_access_token ?? "";
+    try {
+      if (!token) {
+        const response = await fetch(env.VITE_API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            operationName: "LoginGuest",
+            query: LOGIN_GUEST,
+            variables: { networkDomain: env.VITE_NETWORK_DOMAIN },
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+
+        const data = await response.json();
+        if (data.errors) {
+          throw new Error(JSON.stringify(data.errors));
+        }
+
+        token = data.data.tokens.accessToken;
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
     const client = new ApolloClient({
       ssrMode: true,

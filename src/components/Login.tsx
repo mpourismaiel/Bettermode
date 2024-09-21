@@ -83,7 +83,7 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
           });
         }
 
-        document.cookie = `bettermode_access_token=${response.data.loginNetwork.accessToken}; path=/; max-age=3600; samesite=strict; secure`;
+        document.cookie = `bettermode_access_token=${response.data.loginNetwork.accessToken}; path=/; max-age=604800; samesite=strict; secure`;
         setUser(response.data.loginNetwork.member);
       } catch (error) {
         return setErrors({
