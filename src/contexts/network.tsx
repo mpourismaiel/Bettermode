@@ -1,12 +1,14 @@
+import { ApolloError } from "@apollo/client";
 import { useQuery } from "@apollo/client/react/hooks";
 import { createContext } from "react";
 
 import GET_NETWORK from "../queries/get-network.gql";
+import { Network as NetworkType } from "../types";
 
 export const NetworkContext = createContext<{
-  networkError: any;
+  networkError?: ApolloError | null;
   networkLoading: boolean;
-  network: any;
+  network: NetworkType | null;
 }>({
   networkError: null,
   networkLoading: false,
