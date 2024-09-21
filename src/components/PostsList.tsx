@@ -2,12 +2,10 @@ import { useQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon, MoreHorizontalIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
-import { Post as PostComponent } from "./Post";
-
 import GET_POSTS from "../queries/get-posts.gql";
-
 import { PageInfo, Post } from "../types";
 import { capitalize, cn, spaced } from "../utils/string";
+import { Post as PostComponent } from "./Post";
 import { Button } from "./ui/Button";
 import {
   DropdownMenu,

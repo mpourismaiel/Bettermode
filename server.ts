@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import fs from "node:fs/promises";
 
+import { typePolicies } from "./src/utils/apollo-type-policies";
+
 // Constants
 const isProduction = process.env.NODE_ENV === "production";
 const port = process.env.PORT || 5173;
@@ -55,9 +57,12 @@ app.use("*", async (req, res) => {
     }
 
     const token = req.cookies?.bettermode_access_token ?? "";
+
     const client = new ApolloClient({
       ssrMode: true,
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        typePolicies,
+      }),
       link: createHttpLink({
         uri: "https://api.bettermode.com/",
         headers: {
