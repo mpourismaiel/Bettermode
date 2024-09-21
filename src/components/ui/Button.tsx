@@ -13,7 +13,7 @@ const buttonVariants = cva(
         secondary: "bg-secondary hover:bg-secondary/50 text-foreground-1",
       },
       size: {
-        default: "rounded-lg px-4 py-2 text-lg",
+        default: "rounded-lg px-4 py-2 text-base",
         sm: "rounded-lg px-4 py-2 text-sm",
         icon: "h-12 w-12 rounded-xl",
       },
@@ -30,11 +30,12 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  ({ className, variant, size, type = "button", ...props }, ref) => {
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        type={type}
         {...props}
       />
     );

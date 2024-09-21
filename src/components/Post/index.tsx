@@ -3,14 +3,13 @@ import { LockIcon } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { Post as PostType } from "../../types";
+import { emojiMap } from "../../utils/emojies";
 import { FollowButton } from "./FollowButton";
 import { LikeButton } from "./LikeButton";
 import { Prose } from "./Prose";
 import { Reactions } from "./Reactions";
 import { ShareButton } from "./ShareButton";
-
-import { Post as PostType } from "../../types";
-import { emojiMap } from "../../utils/emojies";
 
 export const Post = ({
   summaryMode = false,
@@ -80,7 +79,7 @@ export const Post = ({
     >
       <div className="mb-4 flex items-center">
         <img
-          src={post.owner.member.profilePicture.urls.thumb}
+          src={post.owner.member.profilePicture?.urls.thumb}
           alt={post.owner.member.displayName || post.owner.member.name}
           className="me-4 h-12 w-12 rounded-full"
         />

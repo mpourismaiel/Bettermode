@@ -104,7 +104,7 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="sm">Login</Button>
+        <Button>Login</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -157,7 +157,12 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
             </p>
           </div>
           <div className="flex justify-end">
-            <Button variant="primary" size="sm" disabled={loading}>
+            <Button
+              variant="primary"
+              size="sm"
+              disabled={loading}
+              type="submit"
+            >
               {loading ? (
                 <>
                   <Loader2Icon className="h-4 w-4 animate-spin me-2" />

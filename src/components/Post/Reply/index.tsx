@@ -13,7 +13,7 @@ export const Reply = ({ reply }: { reply: ReplyType }) => {
   return (
     <div className="grid grid-cols-[2.5rem_1fr] lg:grid-cols-[4rem_1fr] gap-4">
       <img
-        src={reply.owner.member.profilePicture.urls.thumb}
+        src={reply.owner.member.profilePicture?.urls?.thumb}
         alt={`${reply.owner.member.displayName || reply.owner.member.name} Profile Picture`}
         className="mt-2 h-10 w-10 lg:h-16 lg:w-16 rounded-full"
       />
@@ -25,6 +25,9 @@ export const Reply = ({ reply }: { reply: ReplyType }) => {
           {dayjs().to(reply.publishedAt)}
         </time>
       </div>
+      {`reply.publishedAt: ${JSON.stringify(reply)}`}
+      {`reply.hasMoreContent: ${reply.hasMoreContent}`}
+      {`showMore: ${showMore}`}
       {reply.hasMoreContent && !showMore ? (
         <div className="flex flex-col gap-2 col-start-1 col-span-2 lg:col-start-2 lg:col-span-1">
           <div className="relative flex flex-col">

@@ -2,14 +2,12 @@ import { useQuery } from "@apollo/client/react/hooks";
 import { Loader2Icon } from "lucide-react";
 import { useCallback } from "react";
 
-import { Reply } from "./Reply";
-
 import GET_REPLIES from "../../queries/post-replies.gql";
-
 import { PageInfo, Reply as ReplyType } from "../../types";
 import { cn } from "../../utils/string";
 import { Button } from "../ui/Button";
 import { Placeholder } from "../ui/Placeholder";
+import { Reply } from "./Reply";
 import { Compose } from "./Reply/Compose";
 
 export const Replies = ({ postId }: { postId: string }) => {

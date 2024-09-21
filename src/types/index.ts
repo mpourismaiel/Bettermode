@@ -1,7 +1,7 @@
 import { emojiMap } from "../utils/emojies";
 
 export type PageInfo = {
-  endCursor: string;
+  endCursor: string | null;
   hasNextPage: boolean;
 };
 
@@ -36,14 +36,6 @@ export type PostReaction = {
   count: number;
   reacted: boolean;
   reaction: keyof typeof emojiMap;
-  participants?: {
-    nodes: {
-      participant: {
-        id: string;
-        name: string;
-      };
-    }[];
-  };
 };
 
 export type PostReactionParticipantExpanded = {
@@ -51,7 +43,6 @@ export type PostReactionParticipantExpanded = {
   displayName: string;
   name: string;
   username: string;
-  banner: Picture;
   profilePicture: Picture;
 };
 
@@ -72,29 +63,18 @@ export type Post = {
     type: string;
     value: unknown;
   }[];
-  subscribersCount: number;
-  postTypeId: string;
-  reactionsCount: number;
-  hasMoreContent: boolean;
-  isAnonymous: boolean;
-  isHidden: boolean;
   shortContent: string;
-  createdAt: Date;
   publishedAt: Date;
-  ownerId: number;
-  createdById: number;
-  totalRepliesCount: number;
   locked: boolean;
   title: string;
   description: string;
-  thumbnail: Picture;
   customSeoDetail: {
     description: string;
     noIndex: boolean;
     thumbnail: Picture;
     title: string;
     canonicalUrl: string;
-  };
+  } | null;
   attachments: PostAttachment[];
   authMemberProps: {
     subscribed: boolean;
@@ -117,7 +97,7 @@ export type Reply = {
   }[];
   hasMoreContent: boolean;
   shortContent: string;
-  thumbnail: Picture;
+  thumbnail?: Picture;
   customSeoDetail: {
     description: string;
     noIndex: boolean;
@@ -125,8 +105,8 @@ export type Reply = {
     thumbnailId: string;
     title: string;
     canonicalUrl: string;
-  };
-  attachments: PostAttachment;
+  } | null;
+  attachments: PostAttachment[];
   owner: {
     member: Owner;
   };
@@ -149,5 +129,5 @@ export type Owner = {
   lastSeenAt: Date;
   createdAt: Date;
   updatedAt: Date;
-  profilePicture: Picture;
+  profilePicture: Picture | null;
 };

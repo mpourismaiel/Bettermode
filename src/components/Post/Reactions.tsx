@@ -62,6 +62,7 @@ export const Reactions = ({
               variant="secondary"
               size="icon"
               onClick={tryOpenReaction(reaction.reaction)}
+              data-testid={`reaction-${reaction.reaction}-participants`}
             >
               <Emoji emoji={reaction.reaction} />
             </Button>

@@ -1,6 +1,5 @@
 mutation Unsubscribe($publisherId: String!) {
   unsubscribe(publisherId: $publisherId) {
-    __typename
     status
   }
 }

@@ -1,15 +1,28 @@
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { render } from "@testing-library/react";
-import { describe, expect, it, test } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
-import App from "./App";
+import GET_POSTS from "../queries/get-posts.gql";
+import { App } from "./App";
 
-test("demo", () => {
-  expect(true).toBe(true);
-});
+const mocks: MockedResponse[] = [
+  {
+    request: {
+      query: GET_POSTS,
+      variables: { limit: 10, reverse: true, orderByString: "publishedAt" },
+    },
+  },
+];
 
 describe("render", () => {
+  beforeEach(() => {
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <App />
+      </MockedProvider>,
+    );
+  });
   it("renders the main page", () => {
-    render(<App />);
     expect(true).toBeTruthy();
   });
 });

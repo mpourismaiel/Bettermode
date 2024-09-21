@@ -5,17 +5,14 @@ query GetNetwork {
     images {
       lightLogo {
         ... on Image {
-          __typename
           id
           url
         }
         ... on Emoji {
-          __typename
           id
           text
         }
         ... on Glyph {
-          __typename
           id
           text
           variant
@@ -28,17 +25,14 @@ query GetNetwork {
       }
       darkLogo {
         ... on Image {
-          __typename
           id
           url
         }
         ... on Emoji {
-          __typename
           id
           text
         }
         ... on Glyph {
-          __typename
           id
           text
           variant

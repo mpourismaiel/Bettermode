@@ -13,7 +13,6 @@ mutation Loginuser($email: String!, $password: String!) {
       email
       profilePicture {
         ... on Image {
-          __typename
           id
           url
           width
@@ -26,7 +25,6 @@ mutation Loginuser($email: String!, $password: String!) {
           cropY
           cropZoom
           urls {
-            __typename
             full
             large
             medium
@@ -35,12 +33,10 @@ mutation Loginuser($email: String!, $password: String!) {
           }
         }
         ... on Emoji {
-          __typename
           id
           text
         }
         ... on Glyph {
-          __typename
           id
           text
           variant

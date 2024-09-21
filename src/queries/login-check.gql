@@ -7,20 +7,9 @@ query LoginCheck {
     email
     profilePicture {
       ... on Image {
-        __typename
         id
         url
-        width
-        height
-        dominantColorHex
-        dpi
-        cropHeight
-        cropWidth
-        cropX
-        cropY
-        cropZoom
         urls {
-          __typename
           full
           large
           medium
@@ -29,12 +18,10 @@ query LoginCheck {
         }
       }
       ... on Emoji {
-        __typename
         id
         text
       }
       ... on Glyph {
-        __typename
         id
         text
         variant

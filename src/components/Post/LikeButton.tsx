@@ -8,6 +8,7 @@ import POST_REMOVE_REACTION from "../../queries/post-remove-reaction.gql";
 import { Post } from "../../types";
 import { emojiMap, emojiVerbsMap } from "../../utils/emojies";
 import { cn } from "../../utils/string";
+import { Emoji } from "../Emoji";
 import { Button } from "../ui/Button";
 import {
   DropdownMenu,
@@ -103,22 +104,22 @@ export const LikeButton = ({
         {authReaction && authReaction !== "removed" ? (
           <>
             {loading ? (
-              <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+              <Loader2Icon className="h-4 w-4 animate-spin" />
             ) : (
-              <span className="me-2">{emojiMap[authReaction]}</span>
+              <Emoji emoji={authReaction} />
             )}
-            <span className="hidden sm:flex">
+            <span className="ms-2 hidden sm:flex">
               {emojiVerbsMap[authReaction as keyof typeof emojiMap]}
             </span>
           </>
         ) : (
           <>
             {loading ? (
-              <Loader2Icon className="me-2 h-4 w-4 animate-spin" />
+              <Loader2Icon className="h-4 w-4 animate-spin" />
             ) : (
-              <ThumbsUpIcon className="me-2 h-4 w-4" />
+              <ThumbsUpIcon className="h-4 w-4" />
             )}
-            <span className="hidden sm:flex">Like</span>
+            <span className="hidden sm:flex ms-2">Like</span>
           </>
         )}
       </Button>

@@ -1,5 +1,6 @@
 import { SendHorizonalIcon } from "lucide-react";
-import { useContext } from "react";
+import { useCallback, useContext, useState } from "react";
+import { toast } from "sonner";
 
 import { GlobalContext } from "../../../contexts/global";
 import { Button } from "../../ui/Button";
@@ -7,8 +8,23 @@ import { Button } from "../../ui/Button";
 export const Compose = ({ postId }: { postId: string }) => {
   const { user } = useContext(GlobalContext);
 
+  const [comment, setComment] = useState("");
+
+  const trySubmitReply = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      toast("Out of project scope");
+      console.log({ message: "Sending reply", comment, postId });
+    },
+    [comment, postId],
+  );
+
+  if (!user || user.username === "Guest") {
+    return null;
+  }
+
   return (
-    <div className="flex gap-6">
+    <form className="flex gap-6" onSubmit={trySubmitReply}>
       <img
         src={
           !user || user.username === "Guest"
@@ -23,13 +39,15 @@ export const Compose = ({ postId }: { postId: string }) => {
           className="w-full resize-none rounded-lg border border-none bg-transparent outline-none focus:outline-none active:outline-none"
           placeholder="Write a reply..."
           rows={4}
+          value={comment}
+          onChange={e => setComment(e.target.value)}
         />
         <div className="flex justify-end">
-          <Button variant="primary" size="icon">
+          <Button variant="primary" size="icon" type="submit">
             <SendHorizonalIcon className="h-4 w-4" />
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
