@@ -37,7 +37,7 @@ These commands can be used to create and run a production version:
 
 ```bash
 npm run build
-npm run server
+npm run serve
 ```
 
 Visit [http://localhost:5173](http://localhost:5173) to view the project.

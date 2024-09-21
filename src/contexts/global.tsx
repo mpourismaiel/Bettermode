@@ -62,11 +62,13 @@ export const GlobalProvider = () => {
     }
   }, [fetchUser, getGuestToken, token]);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
     document.cookie = "bettermode_access_token=; path=/; max-age=0";
     setCheckingLogin(true);
     setUser(null);
     getGuestToken();
+    const { client } = await import("../utils/apollo");
+    client.resetStore();
   }, [getGuestToken]);
 
   useEffect(() => {

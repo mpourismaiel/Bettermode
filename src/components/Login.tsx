@@ -85,6 +85,9 @@ export const Login = ({ shouldPopup = false }: { shouldPopup?: boolean }) => {
 
         document.cookie = `bettermode_access_token=${response.data.loginNetwork.accessToken}; path=/; max-age=604800; samesite=strict; secure`;
         setUser(response.data.loginNetwork.member);
+
+        const { client } = await import("../utils/apollo");
+        client.resetStore();
       } catch (error) {
         return setErrors({
           ...DEFAULT_ERRORS,
