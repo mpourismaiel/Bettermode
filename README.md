@@ -1,50 +1,61 @@
-# React + TypeScript + Vite
+# Bettermode challenge project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The project was made in response to the [challenge proposed](https://bettermode.notion.site/Senior-Front-End-Engineer-485a0725e4d940c3a01fafe2b5154598) by Bettermode for the Senior Front-end Engineer position.
 
-Currently, two official plugins are available:
+Objectives of the challenge are as listed below:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Post Gallery
+- [x] Post Details
+- [x] Post Like/Unlike
+  - With restrictions for guest users
+- [x] Graphql Integration
+- [x] SSR (optional)
+- [x] Session Management (optional)
+  - Login/Logout functionality with guest token retrieval for SSR
+- [x] Unit Tests (optional)
 
-## Expanding the ESLint configuration
+Additional features included are:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [x] Post Follow/Unfollow
+  - Without restrictions for guest users to showcase error handling
+- [x] Post Replies
+  - With restrictions for guest users
+  - Without the compose functionality due to time constraints
 
-- Configure the top-level `parserOptions` property like this:
+## Usage
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+Create a new `.env.local` file in the root of the project using the `.env.example` file as a reference. The values already set in the `.env.example` file can be used to avoid creating new website.
+
+Please make sure to install dependencies before running the project.
+
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+These commands can be used to create and run a production version:
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules,
-  },
-});
+```bash
+npm run build
+npm run server
 ```
+
+Visit [http://localhost:5173](http://localhost:5173) to view the project.
+
+## Inspirations
+
+This project was made using Vite, React, Tailwindcss, Apollo. Some components are developed or copied from Shadcn. The SSR functionality is developed combining code from documentation of Vite and Apollo.
+
+Here are useful links to the documentation of the technologies used in this project:
+
+- [React](https://reactjs.org/)
+- [Tailwindcss](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/)
+  - [Vite SSR](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react)
+  - [Vitest](https://vitest.dev/)
+- [Apollo](https://www.apollographql.com/)
+  - [Apollo SSR](https://www.apollographql.com/docs/react/performance/server-side-rendering)
+  - [Apollo Testing](https://www.apollographql.com/docs/react/development-testing/testing)
+- [Shadcn](https://ui.shadcn.com/)
+- [Sonner](https://github.com/emilkowalski/sonner)
+  - [Shadcn Implementation](https://ui.shadcn.com/docs/components/sonner)

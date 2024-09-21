@@ -1,3 +1,4 @@
+// Courtesy of Shadcn: https://ui.shadcn.com/docs/components/sonner
 import { Toaster as Sonner } from "sonner";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
