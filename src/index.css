@@ -13,17 +13,6 @@
   --foreground-3: 215 14% 34%;
 }
 
-.dark {
-  --primary: 217 91% 60%;
-  --secondary: 217 33% 17%;
-  --surface-1: 222 47% 11%;
-  --surface-2: 229 84% 5%;
-  --surface-3: 217 33% 17%;
-  --foreground-1: 0 0% 100%;
-  --foreground-2: 218 11% 65%;
-  --foreground-3: 215 14% 34%;
-}
-
 .custom-container-wrapper {
   @apply flex justify-center;
 }
